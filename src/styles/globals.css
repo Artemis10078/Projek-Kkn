@@ -1,0 +1,483 @@
+/* ===== FreshGrove global effects & animations ===== */
+
+/* Smooth theme transition */
+html.theme-anim,
+html.theme-anim * {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  opacity: 0.4;
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  background-clip: padding-box;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ---------- Utility classes ---------- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+.gradient-text {
+  background: var(--grad-leaf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-text-citrus {
+  background: var(--grad-citrus);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.bg-grad-hero {
+  background: var(--grad-hero);
+}
+.bg-grad-leaf {
+  background: var(--grad-leaf);
+}
+.bg-grad-citrus {
+  background: var(--grad-citrus);
+}
+.bg-mesh {
+  background-color: var(--background);
+  background-image: var(--grad-mesh-1), var(--grad-mesh-2);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.hover-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-float {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+@keyframes floatySlow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(6deg);
+  }
+}
+.animate-float-slow {
+  animation: floatySlow 9s ease-in-out infinite;
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spinSlow 28s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0px,
+    var(--secondary) 40px,
+    var(--muted) 80px
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+.animate-pulse-soft {
+  animation: pulseSoft 3s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 26s linear infinite;
+}
+
+/* Cart badge pop */
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== Martani Park — Immersive Homepage (additive, design-only) ===== */
+.imm-root {
+  background-color: var(--imm-bg);
+  color: var(--imm-body);
+}
+.imm-heading {
+  color: var(--imm-heading);
+}
+.imm-vignette {
+  background: radial-gradient(
+    circle at center,
+    transparent 38%,
+    var(--imm-bg) 100%
+  );
+}
+.imm-display {
+  font-family: var(--font-display);
+}
+.imm-brass-text {
+  color: var(--imm-brass);
+}
+.imm-muted {
+  color: var(--imm-muted);
+}
+
+.imm-glass {
+  background: var(--imm-glass-bg);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: 1px solid var(--imm-glass-border);
+  box-shadow: var(--imm-glass-shadow);
+  transition:
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.imm-glass-hover:hover {
+  border-color: var(--imm-brass);
+  box-shadow:
+    0 0 36px var(--imm-glow),
+    var(--imm-glass-shadow);
+}
+
+.imm-pill {
+  background: var(--imm-pill-bg);
+  border: 1px solid var(--imm-pill-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.imm-brass-btn {
+  background: var(--imm-brass);
+  color: var(--imm-btn-text);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+.imm-brass-btn:hover {
+  box-shadow: 0 0 26px var(--imm-glow);
+  transform: translateY(-2px);
+}
+.imm-ghost-btn {
+  border: 1px solid var(--imm-brass);
+  color: var(--imm-brass);
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+.imm-ghost-btn:hover {
+  background: var(--imm-glow);
+  transform: translateY(-2px);
+}
+
+/* Living aurora mesh for lower sections */
+.imm-aurora {
+  background-color: var(--imm-bg);
+  background-image:
+    radial-gradient(60% 80% at 15% 20%, var(--imm-aurora-1), transparent 60%),
+    radial-gradient(50% 70% at 85% 15%, var(--imm-aurora-2), transparent 60%),
+    radial-gradient(70% 90% at 50% 100%, var(--imm-aurora-3), transparent 65%);
+  background-size: 200% 200%;
+  animation: immAurora 18s ease-in-out infinite;
+}
+@keyframes immAurora {
+  0%,
+  100% {
+    background-position:
+      0% 50%,
+      100% 0%,
+      50% 100%;
+  }
+  50% {
+    background-position:
+      30% 30%,
+      70% 30%,
+      40% 70%;
+  }
+}
+
+/* Glowing depth orb */
+.imm-orb {
+  border-radius: 9999px;
+  filter: blur(44px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+/* Light sheen sweep on hover */
+.imm-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.imm-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.16),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+.imm-sheen:hover::after {
+  left: 140%;
+}
+
+/* Subtle film grain */
+.imm-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* Navbar over hero: force light text only in dark theme (light hero keeps dark text). */
+.dark .imm-nav-dark a,
+.dark .imm-nav-dark button {
+  color: #eef4ec !important;
+}
+.dark .imm-nav-dark svg {
+  color: #eef4ec !important;
+}
+/* Light theme: the hero is pale, so force strong dark text/icons so the
+   navbar links stay readable instead of fading into the background. */
+html:not(.dark) .imm-nav-dark a,
+html:not(.dark) .imm-nav-dark button {
+  color: var(--imm-heading) !important;
+}
+html:not(.dark) .imm-nav-dark svg {
+  color: var(--imm-heading) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imm-aurora {
+    animation: none;
+  }
+}
+
+/* ===== Immersive theme tokens — Light (elegant etnik) ===== */
+:root {
+  --imm-bg: #f3ecdd;
+  --imm-heading: #2a2016;
+  --imm-body: #4f4636;
+  --imm-muted: #6d6453;
+  --imm-brass: #a96f2c;
+  --imm-glass-bg: rgba(255, 252, 244, 0.74);
+  --imm-glass-border: rgba(120, 85, 40, 0.18);
+  --imm-glass-shadow: 0 24px 60px rgba(90, 60, 25, 0.16);
+  --imm-glow: rgba(169, 111, 44, 0.28);
+  --imm-pill-bg: rgba(120, 85, 40, 0.08);
+  --imm-pill-border: rgba(120, 85, 40, 0.2);
+  --imm-btn-text: #2a1c08;
+  --imm-aurora-1: rgba(82, 183, 136, 0.3);
+  --imm-aurora-2: rgba(244, 166, 35, 0.22);
+  --imm-aurora-3: rgba(120, 170, 130, 0.32);
+  --imm-overlay-soft: rgba(34, 26, 16, 0.18);
+  --imm-overlay-strong: rgba(34, 26, 16, 0.5);
+}
+
+/* ===== Immersive theme tokens — Dark (v5) ===== */
+.dark {
+  --imm-bg: #0d1510;
+  --imm-heading: #eef4ec;
+  --imm-body: #dce5dc;
+  --imm-muted: #c2c8c2;
+  --imm-brass: #f5bb89;
+  --imm-glass-bg: rgba(13, 21, 16, 0.55);
+  --imm-glass-border: rgba(255, 255, 255, 0.1);
+  --imm-glass-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --imm-glow: rgba(245, 187, 137, 0.2);
+  --imm-pill-bg: rgba(255, 255, 255, 0.06);
+  --imm-pill-border: rgba(255, 255, 255, 0.14);
+  --imm-btn-text: #3a2305;
+  --imm-aurora-1: rgba(27, 67, 50, 0.55);
+  --imm-aurora-2: rgba(104, 64, 25, 0.35);
+  --imm-aurora-3: rgba(18, 53, 36, 0.6);
+  --imm-overlay-soft: rgba(8, 14, 10, 0.25);
+  --imm-overlay-strong: rgba(8, 14, 10, 0.72);
+}
+
+/* Section background photo helper (always cover + center) */
+.imm-media {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hairline brass divider used between immersive sections */
+.imm-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--imm-brass),
+    transparent
+  );
+  opacity: 0.4;
+}
+
+/* ===== Mobile performance: trim heavy blur + animation on small screens ===== */
+@media (max-width: 768px) {
+  .imm-glass {
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+  }
+  .imm-aurora {
+    animation: none;
+    background-size: 100% 100%;
+  }
+  .imm-orb {
+    display: none;
+  }
+  .imm-grain::before {
+    display: none;
+  }
+}
+
+/* Navbar over a photo banner (dark in both themes): always force light text. */
+.imm-nav-photo a,
+.imm-nav-photo button {
+  color: #eef4ec !important;
+}
+.imm-nav-photo svg {
+  color: #eef4ec !important;
+}

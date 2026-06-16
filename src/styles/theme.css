@@ -1,0 +1,192 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+
+  /* ===== FreshGrove — Fresh & Organic (Light) ===== */
+  --background: #FBFDF7;
+  --foreground: #16241A;
+  --card: #FFFFFF;
+  --card-foreground: #16241A;
+  --popover: #FFFFFF;
+  --popover-foreground: #16241A;
+
+  --primary: #2D6A4F;
+  --primary-foreground: #FFFFFF;
+  --primary-soft: #E7F2EB;
+
+  --secondary: #EDF6EE;
+  --secondary-foreground: #2D6A4F;
+  --muted: #F2EEDD;
+  --muted-foreground: #6B7C5E;
+  --accent: #F4A623;
+  --accent-foreground: #1A2E1A;
+  --destructive: #E63946;
+  --destructive-foreground: #ffffff;
+
+  --border: rgba(45, 106, 79, 0.14);
+  --input: transparent;
+  --input-background: #F4F8F0;
+  --switch-background: #b5c9ba;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --ring: rgba(45, 106, 79, 0.45);
+
+  /* Gradients & FX tokens */
+  --grad-hero: linear-gradient(135deg, #1B4332 0%, #2D6A4F 45%, #40916C 100%);
+  --grad-leaf: linear-gradient(135deg, #2D6A4F 0%, #52B788 100%);
+  --grad-citrus: linear-gradient(135deg, #F4A623 0%, #F77F00 100%);
+  --grad-mesh-1: radial-gradient(circle at 20% 20%, rgba(82,183,136,0.18), transparent 45%);
+  --grad-mesh-2: radial-gradient(circle at 80% 0%, rgba(244,166,35,0.16), transparent 40%);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --shadow-soft: 0 4px 24px -8px rgba(27, 67, 50, 0.18);
+  --shadow-glow: 0 10px 40px -12px rgba(45, 106, 79, 0.35);
+
+  --chart-1: #2D6A4F;
+  --chart-2: #52B788;
+  --chart-3: #F4A623;
+  --chart-4: #E63946;
+  --chart-5: #5C6BC0;
+  --radius: 0.875rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #16241A;
+  --sidebar-primary: #2D6A4F;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #EDF6EE;
+  --sidebar-accent-foreground: #2D6A4F;
+  --sidebar-border: rgba(45, 106, 79, 0.14);
+  --sidebar-ring: rgba(45, 106, 79, 0.45);
+}
+
+.dark {
+  /* ===== FreshGrove — Deep Forest Premium (Dark) ===== */
+  --background: #0C1610;
+  --foreground: #E8F2EA;
+  --card: #14241A;
+  --card-foreground: #E8F2EA;
+  --popover: #14241A;
+  --popover-foreground: #E8F2EA;
+
+  --primary: #52B788;
+  --primary-foreground: #06120B;
+  --primary-soft: rgba(82, 183, 136, 0.14);
+
+  --secondary: #182C20;
+  --secondary-foreground: #B7E4C7;
+  --muted: #1B2D22;
+  --muted-foreground: #9CB3A2;
+  --accent: #F4A623;
+  --accent-foreground: #16110A;
+  --destructive: #F25C68;
+  --destructive-foreground: #1A0608;
+
+  --border: rgba(183, 228, 199, 0.12);
+  --input: rgba(183, 228, 199, 0.06);
+  --input-background: #182C20;
+  --switch-background: #2f4a39;
+
+  --ring: rgba(82, 183, 136, 0.5);
+
+  --grad-hero: linear-gradient(135deg, #06120B 0%, #123524 50%, #1B4332 100%);
+  --grad-leaf: linear-gradient(135deg, #1B7A4D 0%, #52B788 100%);
+  --grad-citrus: linear-gradient(135deg, #F4A623 0%, #F77F00 100%);
+  --grad-mesh-1: radial-gradient(circle at 20% 20%, rgba(82,183,136,0.22), transparent 45%);
+  --grad-mesh-2: radial-gradient(circle at 80% 0%, rgba(244,166,35,0.14), transparent 40%);
+  --glass-bg: rgba(20, 36, 26, 0.62);
+  --glass-border: rgba(183, 228, 199, 0.12);
+  --shadow-soft: 0 4px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 10px 40px -12px rgba(82, 183, 136, 0.4);
+
+  --chart-1: #52B788;
+  --chart-2: #95D5B2;
+  --chart-3: #F4A623;
+  --chart-4: #F25C68;
+  --chart-5: #8B95E8;
+
+  --sidebar: #14241A;
+  --sidebar-foreground: #E8F2EA;
+  --sidebar-primary: #52B788;
+  --sidebar-primary-foreground: #06120B;
+  --sidebar-accent: #182C20;
+  --sidebar-accent-foreground: #B7E4C7;
+  --sidebar-border: rgba(183, 228, 199, 0.12);
+  --sidebar-ring: rgba(82, 183, 136, 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  html {
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  h1 { font-size: var(--text-2xl); font-weight: var(--font-weight-semibold); line-height: 1.5; }
+  h2 { font-size: var(--text-xl); font-weight: var(--font-weight-semibold); line-height: 1.5; }
+  h3 { font-size: var(--text-lg); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  h4 { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  label { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  input { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
+}
