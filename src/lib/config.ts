@@ -9,10 +9,10 @@ export const SITE = {
     "Jelajahi pesona Desa Wisata Martani: koleksi keris pusaka, arena panahan tradisional, serta buah dan tumbuhan segar langsung dari kebun.",
   // Nomor WhatsApp untuk pemesanan paket panahan & info wisata.
   // Format internasional TANPA tanda +, contoh: 6281234567890
-  whatsappNumber: "6281234567890",
-  email: "info@martanipark.id",
-  address: "Desa Wisata Martani, Sleman, Yogyakarta",
-  instagram: "https://instagram.com/",
+  whatsappNumber: "6281xxxxxxxx",
+  email: "karangmojo@gmail.com",
+  address: "Jl. karangmojo, Rogem, Tamanmartani, Kec. Kalasan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571",
+  instagram: "https://www.instagram.com/karangmojofrutopia/",
   facebook: "https://facebook.com/",
 };
 
