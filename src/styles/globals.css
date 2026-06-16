@@ -387,6 +387,24 @@ html:not(.dark) .imm-nav-dark button {
 html:not(.dark) .imm-nav-dark svg {
   color: var(--imm-heading) !important;
 }
+/* Scrolled navbar: keep a solid, high-contrast surface so the links never blend
+   into the section behind it (especially light mode over photo sections). */
+html:not(.dark) nav.glass {
+  background: rgba(255, 252, 244, 0.92);
+  border-bottom-color: var(--border);
+}
+.dark nav.glass {
+  background: rgba(12, 22, 16, 0.86);
+}
+/* Scrolled navbar links/icons always use strong foreground colour. */
+nav.glass a,
+nav.glass button,
+nav.glass svg {
+  color: var(--foreground);
+}
+nav.glass .gradient-text {
+  color: transparent;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .imm-aurora {

@@ -101,7 +101,7 @@ export function Navbar({
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
               >
                 {t(link.key)}
               </Link>
