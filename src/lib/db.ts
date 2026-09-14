@@ -245,7 +245,7 @@ export async function uploadImage(
 }
 
 // ============================================================
-// Keris (galeri pusaka) & Paket Panahan - Martani Park Tour
+// Keris (galeri pusaka) & Paket Panahan - Candi Mulyo Park Tour
 // ============================================================
 
 export interface KerisRow {

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { translate, categoryLabel, type Lang } from "../../lib/i18n";
 
-const STORAGE_KEY = "martani-lang";
+const STORAGE_KEY = "candimulyo-lang";
 
 interface LanguageContextValue {
   lang: Lang;

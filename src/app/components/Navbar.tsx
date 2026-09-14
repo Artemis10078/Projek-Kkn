@@ -35,7 +35,7 @@ const NAV_LINKS = [
   { key: "nav.panahan", href: "/panahan" },
   { key: "nav.buah", href: "/buah" },
   { key: "nav.tumbuhan", href: "/tumbuhan" },
-  { key: "nav.kontak", href: "/#footer" },
+  { key: "nav.kontak", href: "/kontak" },
 ];
 
 export function Navbar({
@@ -91,7 +91,7 @@ export function Navbar({
               <Leaf size={18} className="text-white" />
             </div>
             <span className="font-display text-xl font-semibold gradient-text">
-              Martani Park Tour
+              Candi Mulyo Park Tour
             </span>
           </Link>
 

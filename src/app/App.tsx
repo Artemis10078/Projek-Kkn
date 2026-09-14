@@ -11,6 +11,7 @@ import { KerisPage } from "./pages/KerisPage";
 import { PanahanPage } from "./pages/PanahanPage";
 import { BuahPage } from "./pages/BuahPage";
 import { TumbuhanPage } from "./pages/TumbuhanPage";
+import { KontakPage } from "./pages/KontakPage";
 import { LoginPage } from "./pages/LoginPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { AdminDashboard } from "./pages/AdminDashboard";
@@ -32,6 +33,7 @@ export default function App() {
                 <Route path="/panahan" element={<PanahanPage />} />
                 <Route path="/buah" element={<BuahPage />} />
                 <Route path="/tumbuhan" element={<TumbuhanPage />} />
+                <Route path="/kontak" element={<KontakPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route

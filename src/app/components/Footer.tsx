@@ -23,7 +23,7 @@ const LINKS: { titleKey: string; items: { labelKey: string; to: string }[] }[] =
     titleKey: "footer.colInfo",
     items: [
       { labelKey: "footer.linkHome", to: "/" },
-      { labelKey: "footer.linkKontak", to: "/#footer" },
+      { labelKey: "footer.linkKontak", to: "/kontak" },
     ],
   },
 ];
