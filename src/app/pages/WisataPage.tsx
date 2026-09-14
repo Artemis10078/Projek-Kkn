@@ -241,7 +241,7 @@ export function WisataPage() {
 
                         <a
                           href={waLink(
-                            "Halo Martani Park Tour, saya ingin memesan " +
+                            "Halo Candimulyo Park Tour, saya ingin memesan " +
                               p.name +
                               " (" +
                               formatRupiah(p.price) +

@@ -44,7 +44,7 @@ const id: Dict = {
   "footer.linkTumbuhan": "Tumbuhan",
   "footer.linkHome": "Beranda",
   "footer.linkKontak": "Kontak",
-  "footer.madeFor": "Dibuat untuk Desa Wisata Martani.",
+  "footer.madeFor": "Dibuat untuk Desa Wisata Candimulyo.",
 
   // Katalog
   "catalog.sortPopular": "Terpopuler",
@@ -71,15 +71,15 @@ const id: Dict = {
   "home.bizEyebrow": "Semua dalam Satu Tempat",
   "home.bizTitle": "Jelajahi Bisnis Kami",
   "home.bizSub":
-    "Dari pelestarian budaya hingga hasil kebun segar, semuanya bisa Anda nikmati di Martani Park Tour.",
+    "Dari pelestarian budaya hingga hasil kebun segar, semuanya bisa Anda nikmati di Candimulyo Park Tour.",
   "home.more": "Selengkapnya",
   "home.featuredHeading": "Produk Pilihan",
   "home.featuredEyebrow": "Buah & Tumbuhan",
-  // Beranda imersif (Martani Park)
+  // Beranda imersif (Candimulyo Park)
   "home.heroLine1": "Jelajahi Harmoni",
   "home.heroLine2": "Alam & Budaya",
   "home.heroSub":
-    "Temukan ketenangan jiwa melalui perpaduan eksklusif antara kearifan lokal Jawa yang sakral dan keindahan alam yang asri di Martani Park Tour.",
+    "Temukan ketenangan jiwa melalui perpaduan eksklusif antara kearifan lokal Jawa yang sakral dan keindahan alam yang asri di Candimulyo Park Tour.",
   "home.ctaStart": "Mulai Perjalanan",
   "home.ctaLearn": "Jelajahi Panahan",
   "home.servEyebrow": "Layanan Eksklusif",
@@ -97,13 +97,13 @@ const id: Dict = {
     "Hubungi kami untuk reservasi paket panahan, kunjungan galeri keris, atau informasi wisata lainnya.",
   "home.ctaBandBtn": "Hubungi via WhatsApp",
   "home.ctaBandMsg":
-    "Halo, saya ingin bertanya tentang kunjungan ke Martani Park Tour.",
+    "Halo, saya ingin bertanya tentang kunjungan ke Candimulyo Park Tour.",
 
   // Profil Desa (beranda) — angka contoh, mudah diganti
   "home.desaEyebrow": "Profil Desa",
-  "home.desaTitle": "Tentang Desa Wisata Martani",
+  "home.desaTitle": "Tentang Desa Wisata Candimulyo",
   "home.desaBody1":
-    "Desa Wisata Martani memadukan pelestarian budaya Jawa dengan keindahan alam agraris. Di sini, tradisi pusaka keris, wahana panahan tradisional, serta kebun buah dan tumbuhan hidup berdampingan dalam harmoni.",
+    "Desa Wisata Candimulyo memadukan pelestarian budaya Jawa dengan keindahan alam agraris. Di sini, tradisi pusaka keris, wahana panahan tradisional, serta kebun buah dan tumbuhan hidup berdampingan dalam harmoni.",
   "home.desaBody2":
     "Berada di kaki perbukitan yang asri, desa kami mengundang wisatawan untuk merasakan kehangatan masyarakat lokal, belajar kearifan tradisional, dan menikmati hasil bumi segar langsung dari sumbernya.",
   "home.desaStat1Value": "1.240",
@@ -114,9 +114,9 @@ const id: Dict = {
   "home.desaStat3Label": "Tahun Berdiri",
   "home.desaCta": "Hubungi via WhatsApp",
   "home.desaWaMsg":
-    "Halo Martani Park Tour, saya ingin mengetahui lebih lanjut tentang profil dan kunjungan ke desa wisata.",
+    "Halo Candimulyo Park Tour, saya ingin mengetahui lebih lanjut tentang profil dan kunjungan ke desa wisata.",
   "home.desaLocation": "Sleman, Yogyakarta",
-  "home.desaCaption": "Panorama Desa Wisata Martani",
+  "home.desaCaption": "Panorama Desa Wisata Candimulyo",
 
   // Kartu bisnis
   "biz.keris.title": "Galeri Keris",
@@ -140,10 +140,10 @@ const id: Dict = {
   "buah.eyebrow": "Hasil Kebun",
   "buah.title": "Buah Segar",
   "buah.subtitle":
-    "Buah pilihan dari kebun Desa Wisata Martani, dipanen dan dikirim dalam kondisi segar.",
+    "Buah pilihan dari kebun Desa Wisata Candimulyo, dipanen dan dikirim dalam kondisi segar.",
   "buah.catHeading": "Katalog Buah Segar",
   "buah.catEyebrow": "Belanja Buah",
-  "tumbuhan.eyebrow": "Nursery Martani",
+  "tumbuhan.eyebrow": "Nursery Candimulyo",
   "tumbuhan.title": "Tumbuhan",
   "tumbuhan.subtitle":
     "Tanaman hias, bonsai, sukulen, dan bibit pilihan untuk mempercantik rumah dan taman Anda.",
@@ -154,7 +154,7 @@ const id: Dict = {
   "keris.eyebrow": "Pelestarian Budaya",
   "keris.title": "Galeri Keris Pusaka",
   "keris.subtitle":
-    "Koleksi keris berumur panjang milik Desa Wisata Martani, dipamerkan untuk mengenalkan warisan budaya kepada wisatawan.",
+    "Koleksi keris berumur panjang milik Desa Wisata Candimulyo, dipamerkan untuk mengenalkan warisan budaya kepada wisatawan.",
   "keris.featured": "Unggulan",
   "keris.dapur": "Dapur",
   "keris.pamor": "Pamor",
@@ -222,7 +222,7 @@ const en: Dict = {
   "footer.linkTumbuhan": "Plants",
   "footer.linkHome": "Home",
   "footer.linkKontak": "Contact",
-  "footer.madeFor": "Made for Martani Tourism Village.",
+  "footer.madeFor": "Made for Candimulyo Tourism Village.",
 
   // Catalog
   "catalog.sortPopular": "Most Popular",
@@ -250,15 +250,15 @@ const en: Dict = {
   "home.bizEyebrow": "All in One Place",
   "home.bizTitle": "Explore Our Offerings",
   "home.bizSub":
-    "From cultural heritage to fresh garden produce, enjoy it all at Martani Park Tour.",
+    "From cultural heritage to fresh garden produce, enjoy it all at Candimulyo Park Tour.",
   "home.more": "Learn more",
   "home.featuredHeading": "Featured Products",
   "home.featuredEyebrow": "Fruits & Plants",
-  // Immersive home (Martani Park)
+  // Immersive home (Candimulyo Park)
   "home.heroLine1": "Explore the Harmony",
   "home.heroLine2": "of Nature & Culture",
   "home.heroSub":
-    "Find peace of mind through an exclusive blend of sacred Javanese wisdom and the serene natural beauty of Martani Park Tour.",
+    "Find peace of mind through an exclusive blend of sacred Javanese wisdom and the serene natural beauty of Candimulyo Park Tour.",
   "home.ctaStart": "Start the Journey",
   "home.ctaLearn": "Explore Archery",
   "home.servEyebrow": "Exclusive Experiences",
@@ -276,13 +276,13 @@ const en: Dict = {
     "Reach out to reserve an archery package, tour the keris gallery, or ask about anything else.",
   "home.ctaBandBtn": "Chat on WhatsApp",
   "home.ctaBandMsg":
-    "Hello, I would like to ask about visiting Martani Park Tour.",
+    "Hello, I would like to ask about visiting Candimulyo Park Tour.",
 
   // Village profile (home) — example figures, easy to edit
   "home.desaEyebrow": "Village Profile",
-  "home.desaTitle": "About Martani Tourism Village",
+  "home.desaTitle": "About Candimulyo Tourism Village",
   "home.desaBody1":
-    "Martani Tourism Village blends the preservation of Javanese culture with the beauty of its agrarian landscape. Here, the heritage of the keris, a traditional archery range, and gardens of fruit and plants live side by side in harmony.",
+    "Candimulyo Tourism Village blends the preservation of Javanese culture with the beauty of its agrarian landscape. Here, the heritage of the keris, a traditional archery range, and gardens of fruit and plants live side by side in harmony.",
   "home.desaBody2":
     "Nestled at the foot of lush hills, our village invites travellers to feel the warmth of the local community, learn traditional wisdom, and enjoy fresh produce straight from the source.",
   "home.desaStat1Value": "1,240",
@@ -293,9 +293,9 @@ const en: Dict = {
   "home.desaStat3Label": "Established",
   "home.desaCta": "Chat on WhatsApp",
   "home.desaWaMsg":
-    "Hello Martani Park Tour, I would like to learn more about the village profile and visiting.",
+    "Hello Candimulyo Park Tour, I would like to learn more about the village profile and visiting.",
   "home.desaLocation": "Sleman, Yogyakarta",
-  "home.desaCaption": "Martani Tourism Village panorama",
+  "home.desaCaption": "Candimulyo Tourism Village panorama",
 
   // Business cards
   "biz.keris.title": "Keris Gallery",
@@ -319,10 +319,10 @@ const en: Dict = {
   "buah.eyebrow": "Garden Produce",
   "buah.title": "Fresh Fruits",
   "buah.subtitle":
-    "Choice fruits from the Martani Tourism Village gardens, harvested and delivered fresh.",
+    "Choice fruits from the Candimulyo Tourism Village gardens, harvested and delivered fresh.",
   "buah.catHeading": "Fresh Fruit Catalogue",
   "buah.catEyebrow": "Shop Fruits",
-  "tumbuhan.eyebrow": "Martani Nursery",
+  "tumbuhan.eyebrow": "Candimulyo Nursery",
   "tumbuhan.title": "Plants",
   "tumbuhan.subtitle":
     "Ornamental plants, bonsai, succulents, and choice seedlings to beautify your home and garden.",
@@ -333,7 +333,7 @@ const en: Dict = {
   "keris.eyebrow": "Cultural Preservation",
   "keris.title": "Heirloom Keris Gallery",
   "keris.subtitle":
-    "A collection of long-preserved keris owned by Martani Tourism Village, displayed to introduce its cultural heritage to visitors.",
+    "A collection of long-preserved keris owned by Candimulyo Tourism Village, displayed to introduce its cultural heritage to visitors.",
   "keris.featured": "Featured",
   "keris.dapur": "Dapur",
   "keris.pamor": "Pamor",

@@ -61,7 +61,7 @@ const ContactPage = () => {
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Lokasi Martani Park Tour"
+              title="Lokasi Candimulyo Park Tour"
               className="w-full h-full object-cover"
             ></iframe>
           </div>

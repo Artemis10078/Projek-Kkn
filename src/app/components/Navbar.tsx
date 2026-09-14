@@ -91,7 +91,7 @@ export function Navbar({
               <Leaf size={18} className="text-white" />
             </div>
             <span className="font-display text-xl font-semibold gradient-text">
-              Martani Park Tour
+              Candimulyo Park Tour
             </span>
           </Link>
 
