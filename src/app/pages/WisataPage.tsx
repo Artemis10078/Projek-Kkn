@@ -88,6 +88,45 @@ const FALLBACK_PACKAGES: ArcheryPackageRow[] = [
     sort: 3,
     created_at: "",
   },
+  {
+  id: 4,
+  name: "Paket 5 Anak Panah", 
+  tagline: "Coba-coba seru",
+  price: 20000,
+  duration: "30 menit", 
+  arrows: "5 anak panah",
+  capacity: "1 orang",
+  includes: [
+    "Sewa busur & anak panah",
+    "Pendampingan instruktur"
+  ],
+  description: "Paket hemat untuk mencoba 5 tembakan.",
+  image: null,
+  popular: false,
+  active: true,
+  sort: 4,
+  created_at: ""
+},
+{
+  id: 5,
+  name: "Paket 10 Anak Panah",
+  tagline: "Lebih puas ngemil",
+  price: 50000,
+  duration: "60 menit",
+  arrows: "10 anak panah",
+  capacity: "1-2 orang",
+  includes: [
+    "Sewa busur & anak panah",
+    "Pendampingan instruktur",
+    "Snack & Minuman"
+  ],
+  description: "10 tembakan lengkap dengan snack dan minuman penyegar.",
+  image: null,
+  popular: false,
+  active: true,
+  sort: 5,
+  created_at: ""
+},
 ];
 
 export function WisataPage() {

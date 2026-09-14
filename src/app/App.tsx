@@ -17,6 +17,7 @@ import { AdminDashboard } from "./pages/AdminDashboard";
 import { OrdersPage } from "./pages/OrdersPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { WishlistPage } from "./pages/WishlistPage";
+import  ContactPage  from "./pages/ContactPage";
 
 export default function App() {
   return (
@@ -34,6 +35,8 @@ export default function App() {
                 <Route path="/tumbuhan" element={<TumbuhanPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/kontak" element={<ContactPage />} />
+
                 <Route
                   path="/orders"
                   element={
@@ -42,6 +45,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/profile"
                   element={
@@ -50,6 +54,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/wishlist"
                   element={
@@ -58,6 +63,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/admin"
                   element={
