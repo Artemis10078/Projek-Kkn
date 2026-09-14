@@ -173,6 +173,10 @@ const id: Dict = {
   "panahan.popular": "Paling Populer",
   "panahan.perPerson": "/ orang",
   "panahan.order": "Pesan via WhatsApp",
+  "wisata.buahEyebrow": "Pilih Paket",
+  "wisata.buahTitle": "Paket Wisata Buah",
+  "wisata.buahSub":
+    "Berkeliling kebun dan mencoba aneka buah unik hasil perkebunan Candimulyo.",
 
   // Kategori
   "cat.All": "Semua",
@@ -352,6 +356,10 @@ const en: Dict = {
   "panahan.popular": "Most Popular",
   "panahan.perPerson": "/ person",
   "panahan.order": "Order via WhatsApp",
+  "wisata.buahEyebrow": "Choose a Package",
+  "wisata.buahTitle": "Fruit Tour Packages",
+  "wisata.buahSub":
+    "Explore the orchard and taste the unique fruits grown in Candimulyo.",
 
   // Categories
   "cat.All": "All",

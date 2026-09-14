@@ -11,6 +11,7 @@ import { formatRupiah } from "../../lib/products";
 type Draft = Partial<ArcheryPackageRow> & { includesText?: string };
 
 const EMPTY: Draft = {
+  category: "panahan",
   name: "",
   tagline: "",
   price: 0,
@@ -82,8 +83,8 @@ export function AdminArcheryPanel() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="font-display text-2xl text-foreground">Paket Panahan</h2>
-          <p className="text-sm text-muted-foreground">Kelola paket wahana panahan (1, 2, 3).</p>
+          <h2 className="font-display text-2xl text-foreground">Paket Wisata</h2>
+          <p className="text-sm text-muted-foreground">Kelola paket panahan dan paket wisata buah.</p>
         </div>
         <button
           onClick={() => setEditing({ ...EMPTY })}
@@ -113,6 +114,9 @@ export function AdminArcheryPanel() {
               <div className="flex items-center justify-between gap-2 mb-1">
                 <h3 className="font-medium text-foreground">{p.name}</h3>
                 <div className="flex items-center gap-1">
+                  <span className="text-[10px] bg-secondary text-foreground px-2 py-0.5 rounded-full">
+                    {p.category === "buah" ? "Buah" : "Panahan"}
+                  </span>
                   {p.popular && <span className="text-[10px] bg-primary text-primary-foreground px-2 py-0.5 rounded-full">Populer</span>}
                   {!p.active && <span className="text-[10px] bg-secondary text-muted-foreground px-2 py-0.5 rounded-full">Nonaktif</span>}
                 </div>
@@ -157,6 +161,21 @@ export function AdminArcheryPanel() {
             </div>
 
             <div className="space-y-3">
+              <Field label="Kategori Paket">
+                <select
+                  className={inputCls}
+                  value={editing.category ?? "panahan"}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      category: e.target.value as "panahan" | "buah",
+                    })
+                  }
+                >
+                  <option value="panahan">Paket Panahan</option>
+                  <option value="buah">Paket Wisata Buah</option>
+                </select>
+              </Field>
               <Field label="Nama Paket">
                 <input className={inputCls} value={editing.name ?? ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
               </Field>
@@ -170,7 +189,7 @@ export function AdminArcheryPanel() {
                 <Field label="Durasi">
                   <input className={inputCls} value={editing.duration ?? ""} onChange={(e) => setEditing({ ...editing, duration: e.target.value })} />
                 </Field>
-                <Field label="Jumlah Anak Panah">
+                <Field label="Anak Panah / Jumlah Buah">
                   <input className={inputCls} value={editing.arrows ?? ""} onChange={(e) => setEditing({ ...editing, arrows: e.target.value })} />
                 </Field>
                 <Field label="Kapasitas">

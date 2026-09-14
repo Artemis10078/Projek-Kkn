@@ -295,8 +295,12 @@ export async function deleteKeris(
   return { error: error ? error.message : null };
 }
 
+export type PackageCategory = "panahan" | "buah";
+
 export interface ArcheryPackageRow {
   id: number;
+  /** Pengelompokan paket di halaman Wisata. Null/undefined dianggap "panahan". */
+  category?: PackageCategory | null;
   name: string;
   tagline: string | null;
   price: number;
