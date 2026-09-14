@@ -32,7 +32,7 @@ interface NavbarProps {
 const NAV_LINKS = [
   { key: "nav.home", href: "/" },
   { key: "nav.keris", href: "/keris" },
-  { key: "nav.panahan", href: "/panahan" },
+  { key: "nav.wisata", href: "/wisata" },
   { key: "nav.buah", href: "/buah" },
   { key: "nav.tumbuhan", href: "/tumbuhan" },
   { key: "nav.kontak", href: "/#footer" },

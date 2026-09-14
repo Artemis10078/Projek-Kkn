@@ -8,7 +8,7 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { HomePage } from "./pages/HomePage";
 import { KerisPage } from "./pages/KerisPage";
-import { PanahanPage } from "./pages/PanahanPage";
+import { WisataPage } from "./pages/WisataPage";
 import { BuahPage } from "./pages/BuahPage";
 import { TumbuhanPage } from "./pages/TumbuhanPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -29,7 +29,7 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/keris" element={<KerisPage />} />
-                <Route path="/panahan" element={<PanahanPage />} />
+                <Route path="/wisata" element={<WisataPage />} />
                 <Route path="/buah" element={<BuahPage />} />
                 <Route path="/tumbuhan" element={<TumbuhanPage />} />
                 <Route path="/login" element={<LoginPage />} />

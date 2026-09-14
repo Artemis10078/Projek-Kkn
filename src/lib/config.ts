@@ -1,12 +1,12 @@
-// Konfigurasi global situs Martani Park Tour.
+// Konfigurasi global situs Karangmojo Fruit Village.
 // Ubah nilai di sini untuk menyesuaikan identitas & kontak.
 
 export const SITE = {
-  name: "Martani Park Tour",
-  short: "Martani Park",
+  name: "Karangmojo Fruit Village",
+  short: "Karangmojo",
   tagline: "Desa Wisata Budaya & Agro",
   description:
-    "Jelajahi pesona Desa Wisata Martani: koleksi keris pusaka, arena panahan tradisional, serta buah dan tumbuhan segar langsung dari kebun.",
+    "Jelajahi pesona Karangmojo Fruit Village: koleksi keris pusaka, arena panahan tradisional, serta buah dan tumbuhan segar langsung dari kebun.",
   // Nomor WhatsApp untuk pemesanan paket panahan & info wisata.
   // Format internasional TANPA tanda +, contoh: 6281234567890
   whatsappNumber: "6281xxxxxxxx",

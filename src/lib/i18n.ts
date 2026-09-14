@@ -12,7 +12,7 @@ const id: Dict = {
   // Navbar
   "nav.home": "Beranda",
   "nav.keris": "Keris",
-  "nav.panahan": "Panahan",
+  "nav.wisata": "Wisata",
   "nav.buah": "Buah",
   "nav.tumbuhan": "Tumbuhan",
   "nav.kontak": "Kontak",
