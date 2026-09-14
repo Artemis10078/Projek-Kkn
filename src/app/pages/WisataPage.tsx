@@ -23,19 +23,19 @@ const PANAHAN_IMG =
 const FALLBACK_PACKAGES: ArcheryPackageRow[] = [
   {
     id: 1,
-    name: "Paket 1 - Pemula",
-    tagline: "Coba pertama panahan",
-    price: 25000,
-    duration: "30 menit",
-    arrows: "15 anak panah",
-    capacity: "1 orang",
+    name: "Paket Buah Segar",
+    tagline: "Buah hasil dari perkebunan yang unik dan juga bisa dinikmati",
+    price: 100000,
+    duration: "45 menit",
+    arrows: "10 Aneka Buah Unik",
+    capacity: "1-10 orang",
     includes: [
-      "Sewa busur & anak panah",
+      "Sepeda bersama",
       "Pendampingan instruktur",
-      "Target standar",
+      "Buah unik seperti Black Sappote dan Buah Ajaib",
     ],
     description:
-      "Cocok untuk pemula yang ingin mencoba sensasi memanah pertama kali.",
+      "Cocok untuk pemula yang ingin mencoba sensasi buah dari perkebunan Candimulyo pertama kali.",
     image: null,
     popular: false,
     active: true,
@@ -44,17 +44,18 @@ const FALLBACK_PACKAGES: ArcheryPackageRow[] = [
   },
   {
     id: 2,
-    name: "Paket 2 - Reguler",
-    tagline: "Paling populer",
-    price: 50000,
+    name: "Paket Buah dan Panah",
+    tagline: "Paling dicari",
+    price: 150000,
     duration: "60 menit",
-    arrows: "40 anak panah",
-    capacity: "1 orang",
+    arrows: "30 anak panah",
+    capacity: "4 orang",
     includes: [
+      "Sepeda Bersama",
       "Sewa busur & anak panah",
       "Pendampingan instruktur",
       "Target jarak ganda",
-      "Air mineral",
+      "Buah unik seperti Black Sappote dan Buah Ajaib",
     ],
     description:
       "Durasi lebih panjang dengan lebih banyak anak panah untuk berlatih lebih serius.",
@@ -87,9 +88,48 @@ const FALLBACK_PACKAGES: ArcheryPackageRow[] = [
     sort: 3,
     created_at: "",
   },
+  {
+  id: 4,
+  name: "Paket 5 Anak Panah", 
+  tagline: "Coba-coba seru",
+  price: 20000,
+  duration: "30 menit", 
+  arrows: "5 anak panah",
+  capacity: "1 orang",
+  includes: [
+    "Sewa busur & anak panah",
+    "Pendampingan instruktur"
+  ],
+  description: "Paket hemat untuk mencoba 5 tembakan.",
+  image: null,
+  popular: false,
+  active: true,
+  sort: 4,
+  created_at: ""
+},
+{
+  id: 5,
+  name: "Paket 10 Anak Panah",
+  tagline: "Lebih puas ngemil",
+  price: 50000,
+  duration: "60 menit",
+  arrows: "10 anak panah",
+  capacity: "1-2 orang",
+  includes: [
+    "Sewa busur & anak panah",
+    "Pendampingan instruktur",
+    "Snack & Minuman"
+  ],
+  description: "10 tembakan lengkap dengan snack dan minuman penyegar.",
+  image: null,
+  popular: false,
+  active: true,
+  sort: 5,
+  created_at: ""
+},
 ];
 
-export function PanahanPage() {
+export function WisataPage() {
   const [packages, setPackages] =
     useState<ArcheryPackageRow[]>(FALLBACK_PACKAGES);
   const { t } = useLang();
@@ -201,7 +241,7 @@ export function PanahanPage() {
 
                         <a
                           href={waLink(
-                            "Halo Candi Mulyo Park Tour, saya ingin memesan " +
+                            "Halo Candimulyo Park Tour, saya ingin memesan " +
                               p.name +
                               " (" +
                               formatRupiah(p.price) +

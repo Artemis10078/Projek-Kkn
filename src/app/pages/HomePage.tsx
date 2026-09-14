@@ -30,7 +30,7 @@ const DESA_IMG = WM + "Kampung%20Naga%2C%20Tasikmalaya%202.jpg?width=1200";
 
 const SERVICES = [
   { key: "keris", href: "/keris", icon: Sword, img: KERIS_IMG },
-  { key: "panahan", href: "/panahan", icon: Target, img: PANAHAN_IMG },
+  { key: "panahan", href: "/wisata", icon: Target, img: PANAHAN_IMG },
   { key: "buah", href: "/buah", icon: Apple, img: BUAH_IMG },
   { key: "tumbuhan", href: "/tumbuhan", icon: Sprout, img: TUMBUHAN_IMG },
 ];

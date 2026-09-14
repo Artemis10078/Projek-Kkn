@@ -9,7 +9,7 @@ const LINKS: { titleKey: string; items: { labelKey: string; to: string }[] }[] =
     titleKey: "footer.colWisata",
     items: [
       { labelKey: "footer.linkKeris", to: "/keris" },
-      { labelKey: "footer.linkPanahan", to: "/panahan" },
+      { labelKey: "footer.linkPanahan", to: "/wisata" },
     ],
   },
   {
@@ -89,7 +89,7 @@ export function Footer() {
                 <MapPin size={14} className="text-primary" /> {SITE.address}
               </p>
               <p className="flex items-center gap-2">
-                <Phone size={14} className="text-primary" /> +{SITE.whatsappNumber}
+                <Phone size={14} className="text-primary" /> {SITE.phoneDisplay}
               </p>
               <p className="flex items-center gap-2">
                 <Mail size={14} className="text-primary" /> {SITE.email}

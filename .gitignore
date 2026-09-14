@@ -33,7 +33,3 @@ pnpm-debug.log*
 # Vercel / Netlify
 .vercel
 .netlify
-
-# Supabase CLI (berisi project ref & pooler URL milik kamu)
-supabase/.temp/
-.branches/

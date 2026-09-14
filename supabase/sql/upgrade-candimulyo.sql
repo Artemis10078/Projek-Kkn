@@ -1,5 +1,5 @@
 -- ============================================================
--- Candi Mulyo Park Tour - Upgrade: Keris, Panahan, Tipe Produk
+-- Candimulyo Park Tour - Upgrade: Keris, Panahan, Tipe Produk
 -- Aman dijalankan berulang (idempotent). Jalankan SETELAH setup.sql.
 -- ============================================================
 
@@ -65,12 +65,12 @@ create policy "archery admin write" on public.archery_packages for all
 insert into public.products (name, category, price, unit, rating, reviews, image, origin, description, stock, tags, type, badge, badge_color)
 select t.name, t.category, t.price, t.unit, t.rating, t.reviews, t.image, t.origin, t.description, t.stock, t.tags::jsonb, t.type, t.badge, t.badge_color
 from (values
-  ('Monstera Deliciosa','Tanaman Hias',120000,'per pot',4.8,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Feuille%20Monstera%20deliciosa.jpg?width=700','Nursery Candi Mulyo','Tanaman hias daun ikonik berlubang alami, mudah dirawat dan menyegarkan ruangan.',25,'["Indoor","Populer"]','tumbuhan','Populer','#2D6A4F'),
-  ('Lidah Mertua (Sansevieria)','Tanaman Hias',65000,'per pot',4.7,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Snake%20plant.jpg?width=700','Nursery Candi Mulyo','Tanaman penyaring udara yang sangat tahan banting, cocok untuk pemula.',40,'["Indoor","Tahan Banting"]','tumbuhan',null,null),
-  ('Aglaonema Merah','Tanaman Hias',95000,'per pot',4.8,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Aglaonema%20modestum.jpg?width=700','Nursery Candi Mulyo','Aglaonema dengan corak daun cantik, primadona koleksi tanaman hias.',18,'["Indoor","Berwarna"]','tumbuhan','Favorit','#E63946'),
-  ('Anggrek Bulan',  'Tanaman Hias',85000,'per pot',4.9,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Anggrek%20Bulan.jpg?width=700','Kebun Candi Mulyo','Anggrek bulan (Phalaenopsis), bunga pesona nasional Indonesia yang elegan.',22,'["Bunga","Elegan"]','tumbuhan',null,null),
-  ('Bonsai Beringin','Bonsai',350000,'per pot',4.9,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Acer%20palmatum-Bonsai.jpg?width=700','Kebun Candi Mulyo','Bonsai dengan bentuk artistik, mahakarya hidup untuk penghias ruangan premium.',8,'["Premium","Seni"]','tumbuhan','Premium','#C9A227'),
-  ('Kaktus Mini','Sukulen & Kaktus',25000,'per pot',4.6,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Small%20size%20cactus%20assortment%20in%20a%20pot.jpg?width=700','Nursery Candi Mulyo','Kaktus mini lucu dalam pot, perawatan super mudah dan cocok untuk meja kerja.',60,'["Mini","Mudah Rawat"]','tumbuhan',null,null)
+  ('Monstera Deliciosa','Tanaman Hias',120000,'per pot',4.8,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Feuille%20Monstera%20deliciosa.jpg?width=700','Nursery Candimulyo','Tanaman hias daun ikonik berlubang alami, mudah dirawat dan menyegarkan ruangan.',25,'["Indoor","Populer"]','tumbuhan','Populer','#2D6A4F'),
+  ('Lidah Mertua (Sansevieria)','Tanaman Hias',65000,'per pot',4.7,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Snake%20plant.jpg?width=700','Nursery Candimulyo','Tanaman penyaring udara yang sangat tahan banting, cocok untuk pemula.',40,'["Indoor","Tahan Banting"]','tumbuhan',null,null),
+  ('Aglaonema Merah','Tanaman Hias',95000,'per pot',4.8,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Aglaonema%20modestum.jpg?width=700','Nursery Candimulyo','Aglaonema dengan corak daun cantik, primadona koleksi tanaman hias.',18,'["Indoor","Berwarna"]','tumbuhan','Favorit','#E63946'),
+  ('Anggrek Bulan',  'Tanaman Hias',85000,'per pot',4.9,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Anggrek%20Bulan.jpg?width=700','Kebun Candimulyo','Anggrek bulan (Phalaenopsis), bunga pesona nasional Indonesia yang elegan.',22,'["Bunga","Elegan"]','tumbuhan',null,null),
+  ('Bonsai Beringin','Bonsai',350000,'per pot',4.9,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Acer%20palmatum-Bonsai.jpg?width=700','Kebun Candimulyo','Bonsai dengan bentuk artistik, mahakarya hidup untuk penghias ruangan premium.',8,'["Premium","Seni"]','tumbuhan','Premium','#C9A227'),
+  ('Kaktus Mini','Sukulen & Kaktus',25000,'per pot',4.6,0,'https://commons.wikimedia.org/wiki/Special:FilePath/Small%20size%20cactus%20assortment%20in%20a%20pot.jpg?width=700','Nursery Candimulyo','Kaktus mini lucu dalam pot, perawatan super mudah dan cocok untuk meja kerja.',60,'["Mini","Mudah Rawat"]','tumbuhan',null,null)
 ) as t(name text, category text, price numeric, unit text, rating numeric, reviews int, image text, origin text, description text, stock int, tags text, type text, badge text, badge_color text)
 where not exists (select 1 from public.products where type = 'tumbuhan');
 

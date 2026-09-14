@@ -8,16 +8,16 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { HomePage } from "./pages/HomePage";
 import { KerisPage } from "./pages/KerisPage";
-import { PanahanPage } from "./pages/PanahanPage";
+import { WisataPage } from "./pages/WisataPage";
 import { BuahPage } from "./pages/BuahPage";
 import { TumbuhanPage } from "./pages/TumbuhanPage";
-import { KontakPage } from "./pages/KontakPage";
 import { LoginPage } from "./pages/LoginPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { OrdersPage } from "./pages/OrdersPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { WishlistPage } from "./pages/WishlistPage";
+import  ContactPage  from "./pages/ContactPage";
 
 export default function App() {
   return (
@@ -30,12 +30,13 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/keris" element={<KerisPage />} />
-                <Route path="/panahan" element={<PanahanPage />} />
+                <Route path="/wisata" element={<WisataPage />} />
                 <Route path="/buah" element={<BuahPage />} />
                 <Route path="/tumbuhan" element={<TumbuhanPage />} />
-                <Route path="/kontak" element={<KontakPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/kontak" element={<ContactPage />} />
+
                 <Route
                   path="/orders"
                   element={
@@ -44,6 +45,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/profile"
                   element={
@@ -52,6 +54,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/wishlist"
                   element={
@@ -60,6 +63,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/admin"
                   element={

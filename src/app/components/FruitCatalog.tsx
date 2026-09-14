@@ -84,7 +84,7 @@ export function FruitCatalog({
       <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
           <p className="text-accent text-sm font-semibold uppercase tracking-wider mb-1">{eyebrow}</p>
-          <h2 className="font-display text-4xl text-foreground">{heading}</h2>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-foreground">{heading}</h2>
           {source === "supabase" && (
             <span className="inline-block mt-2 text-[11px] text-primary bg-primary-soft px-2 py-0.5 rounded-full">
               {t("catalog.live")}
@@ -113,12 +113,12 @@ export function FruitCatalog({
           )}
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 overflow-x-auto flex-nowrap lg:flex-wrap pb-1 -mx-1 px-1">
           {SORT_OPTIONS.map((opt) => (
             <button
               key={opt.key}
               onClick={() => setSort(opt.key)}
-              className={`text-xs px-3 py-2 rounded-full border transition-colors ${
+              className={`shrink-0 text-xs px-3 py-2 rounded-full border transition-colors ${
                 sort === opt.key
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-card text-muted-foreground border-border hover:border-primary"
@@ -131,12 +131,12 @@ export function FruitCatalog({
       </Reveal>
 
       {/* Category chips */}
-      <Reveal className="flex items-center gap-2 flex-wrap mb-10">
+      <Reveal className="flex items-center gap-2 overflow-x-auto flex-nowrap sm:flex-wrap mb-10 pb-1 -mx-1 px-1">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`text-sm px-4 py-2 rounded-full border transition-colors ${
+            className={`shrink-0 text-sm px-4 py-2 rounded-full border transition-colors ${
               activeCategory === cat
                 ? "bg-primary text-primary-foreground border-primary shadow-soft"
                 : "bg-card text-muted-foreground border-border hover:border-primary"

@@ -19,6 +19,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { useLang } from "../context/LanguageContext";
+import { SITE } from "../../lib/config";
 
 interface NavbarProps {
   cartCount: number;
@@ -32,7 +33,7 @@ interface NavbarProps {
 const NAV_LINKS = [
   { key: "nav.home", href: "/" },
   { key: "nav.keris", href: "/keris" },
-  { key: "nav.panahan", href: "/panahan" },
+  { key: "nav.wisata", href: "/wisata" },
   { key: "nav.buah", href: "/buah" },
   { key: "nav.tumbuhan", href: "/tumbuhan" },
   { key: "nav.kontak", href: "/kontak" },
@@ -86,12 +87,14 @@ export function Navbar({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-xl bg-grad-leaf flex items-center justify-center shadow-md group-hover:rotate-12 transition-transform">
+          <Link to="/" className="flex items-center gap-2 group min-w-0 shrink">
+            <div className="w-9 h-9 shrink-0 rounded-xl bg-grad-leaf flex items-center justify-center shadow-md group-hover:rotate-12 transition-transform">
               <Leaf size={18} className="text-white" />
             </div>
-            <span className="font-display text-xl font-semibold gradient-text">
-              Candi Mulyo Park Tour
+            {/* Nama panjang dipakai mulai layar sm; di HP pakai nama pendek agar tidak mendorong ikon aksi. */}
+            <span className="font-display text-base sm:text-xl font-semibold gradient-text truncate">
+              <span className="hidden sm:inline">{SITE.name}</span>
+              <span className="sm:hidden">{SITE.short}</span>
             </span>
           </Link>
 
@@ -101,7 +104,7 @@ export function Navbar({
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
               >
                 {t(link.key)}
               </Link>
@@ -109,7 +112,7 @@ export function Navbar({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
             {searchOpen ? (
               <div className="flex items-center gap-2 bg-secondary rounded-full px-4 py-1.5">
                 <Search size={15} className="text-muted-foreground" />
@@ -117,7 +120,7 @@ export function Navbar({
                   autoFocus
                   value={searchQuery}
                   onChange={(e) => onSearchChange?.(e.target.value)}
-                  className="bg-transparent outline-none text-sm w-32 sm:w-44 placeholder:text-muted-foreground text-foreground"
+                  className="bg-transparent outline-none text-sm w-24 sm:w-44 placeholder:text-muted-foreground text-foreground"
                   placeholder={t("nav.searchPlaceholder")}
                 />
                 <button
@@ -273,14 +276,14 @@ export function Navbar({
       {menuOpen && (
         <div className="md:hidden glass border-t border-border px-4 py-4 flex flex-col gap-3">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm text-foreground py-1 hover:text-primary"
+              className="text-sm text-foreground py-2 hover:text-primary"
             >
               {t(link.key)}
-            </a>
+            </Link>
           ))}
         </div>
       )}
