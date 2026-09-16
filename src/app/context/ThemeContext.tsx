@@ -15,11 +15,14 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
-const STORAGE_KEY = "freshgrove-theme";
+const STORAGE_KEY = "candimulyo-theme";
+// Kunci lama dari template; dibaca sekali agar pilihan tema lama tetap dihormati.
+const LEGACY_STORAGE_KEY = "freshgrove-theme";
 
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") return "light";
-  const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
+  const stored = (localStorage.getItem(STORAGE_KEY) ??
+    localStorage.getItem(LEGACY_STORAGE_KEY)) as Theme | null;
   if (stored === "light" || stored === "dark") return stored;
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }

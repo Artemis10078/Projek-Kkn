@@ -36,7 +36,16 @@ export function ProductModal({ product, onClose, onAddToCart, liked, onToggleLik
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
-  const nutrition = product.nutrition;
+  // Nutrisi hanya ditampilkan bila BENAR-BENAR ada angkanya. Tanpa penyaringan
+  // ini, produk dengan objek nutrisi kosong ({}) akan memunculkan blok berisi
+  // empat tanda "-" yang terlihat seperti bagian rusak.
+  const rawNutrition = product.nutrition;
+  const hasNutrition =
+    !!rawNutrition &&
+    (["calories", "vitaminC", "fiber", "sugar"] as const).some(
+      (k) => typeof rawNutrition[k] === "number",
+    );
+  const nutrition = hasNutrition ? rawNutrition : undefined;
   const badgeStyle = { backgroundColor: product.badgeColor ?? "#2D6A4F", color: "#fff" };
   const maxStock = typeof product.stock === "number" ? product.stock : Infinity;
   const outOfStock = maxStock <= 0;

@@ -21,12 +21,15 @@ interface CartContextValue {
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
-const STORAGE_KEY = "freshgrove-cart";
+const STORAGE_KEY = "candimulyo-cart";
+// Kunci lama dari template; dibaca sekali agar keranjang pengunjung lama tidak hilang.
+const LEGACY_STORAGE_KEY = "freshgrove-cart";
 
 function loadCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw =
+      localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
     return raw ? (JSON.parse(raw) as CartItem[]) : [];
   } catch {
     return [];

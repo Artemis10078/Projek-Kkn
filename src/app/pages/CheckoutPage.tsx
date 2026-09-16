@@ -449,6 +449,8 @@ export function CheckoutPage() {
                     }`}
                   >
                     <QrCode size={16} /> QRIS
+                    {/* QRIS dijadikan alur utama sesuai keputusan pengelola. */}
+                    <span className="text-[10px] font-semibold text-primary">Disarankan</span>
                   </button>
                   <button
                     type="button"
@@ -464,7 +466,7 @@ export function CheckoutPage() {
                 </div>
                 <p className="text-[11px] text-muted-foreground mt-2">
                   {payMethod === "qris"
-                    ? "Scan QRIS dengan GoPay, OVO, DANA, ShopeePay, atau mobile banking."
+                    ? "Scan QRIS dengan GoPay, OVO, DANA, ShopeePay, atau mobile banking. Pesanan dikonfirmasi admin setelah bukti transfer diterima."
                     : "Kartu kredit/debit, e-wallet, & Virtual Account otomatis via Midtrans."}
                 </p>
               </div>
@@ -490,7 +492,7 @@ export function CheckoutPage() {
               </button>
               <p className="text-[11px] text-muted-foreground text-center mt-3">
                 {payMethod === "qris"
-                  ? "Pesanan disimpan, lalu Anda membayar lewat QRIS. Stok otomatis berkurang."
+                  ? "Pesanan disimpan dengan status Menunggu Pembayaran, lalu Anda membayar lewat QRIS. Stok otomatis berkurang."
                   : "Anda akan diarahkan ke jendela pembayaran aman Midtrans."}
               </p>
             </div>

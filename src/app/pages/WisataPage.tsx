@@ -11,7 +11,7 @@ import {
 import { ShopShell } from "../components/ShopShell";
 import { PageBanner } from "../components/PageBanner";
 import { Reveal } from "../components/Reveal";
-import { Tilt3DCard } from "../components/immersive/Tilt3DCard";
+import { Tilt3DCard } from "../components/immersive/LazyImmersive";
 import { fetchArcheryPackages, type ArcheryPackageRow } from "../../lib/db";
 import { formatRupiah } from "../../lib/products";
 import { waLink } from "../../lib/config";
@@ -212,7 +212,7 @@ function PackageCard({
               ".",
           )}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className={`w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-semibold ${
             p.popular ? "imm-brass-btn" : "imm-ghost-btn"
           }`}

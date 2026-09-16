@@ -154,7 +154,7 @@ export default function ContactPage() {
                         ", saya ingin bertanya tentang kunjungan dan produk desa wisata.",
                     )}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-grad-leaf text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-md hover:scale-105 transition-transform"
                   >
                     <MessageCircle size={15} /> Chat WhatsApp
@@ -168,7 +168,7 @@ export default function ContactPage() {
                   <a
                     href={SITE.mapLinkUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-secondary text-foreground px-5 py-2.5 rounded-full text-sm font-medium hover:bg-accent/20 transition-colors"
                   >
                     <MapPin size={15} /> Buka di Google Maps
@@ -228,7 +228,7 @@ export default function ContactPage() {
                     <a
                       href={waLink(item.message)}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="mt-auto inline-flex items-center justify-center gap-2 bg-grad-leaf text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-md hover:scale-105 transition-transform"
                     >
                       <MessageCircle size={15} /> Hubungi via WhatsApp

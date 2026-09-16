@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import {
   ArrowLeft,
@@ -24,6 +24,7 @@ import {
   Eye,
   Phone,
   MapPin,
+  ChevronDown,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -50,10 +51,26 @@ import {
   mapRowToProduct,
   SEED_PRODUCTS,
   type Product,
+  type Nutrition,
 } from "../../lib/products";
 import { Sword, Target } from "lucide-react";
-import { AdminKerisPanel } from "../components/AdminKerisPanel";
-import { AdminArcheryPanel } from "../components/AdminArcheryPanel";
+import { PanelFallback } from "../components/RouteFallback";
+import { ConfirmDialog } from "../components/ConfirmDialog";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../components/ui/collapsible";
+
+// Code splitting per tab: panel Keris & Panahan baru diunduh saat tabnya
+// dibuka. Fallback memakai SkeletonCard supaya kerangka kartu langsung
+// terlihat, bukan area kosong.
+const AdminKerisPanel = lazy(() =>
+  import("../components/AdminKerisPanel").then((m) => ({ default: m.AdminKerisPanel })),
+);
+const AdminArcheryPanel = lazy(() =>
+  import("../components/AdminArcheryPanel").then((m) => ({ default: m.AdminArcheryPanel })),
+);
 
 interface OrderItem {
   name: string;
@@ -113,6 +130,59 @@ const LOW_STOCK_THRESHOLD = 20;
 
 type Tab = "overview" | "orders" | "products" | "keris" | "panahan" | "customers";
 
+// ---------- Validasi ringan untuk field detail tambahan ----------
+// Batas jumlah gambar galeri: mencegah payload jsonb membengkak dan
+// mencegah admin menempel ratusan URL sekaligus.
+const MAX_GALLERY_IMAGES = 6;
+const MAX_TAGS = 8;
+const ALLOWED_IMAGE_EXT = ["jpg", "jpeg", "png", "webp", "gif", "avif"];
+
+/** URL gambar dianggap sah bila http(s) dan berekstensi gambar (query diabaikan). */
+function isValidImageUrl(raw: string): boolean {
+  try {
+    const u = new URL(raw);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    const ext = (u.pathname.split(".").pop() ?? "").toLowerCase();
+    // Supabase Storage & Unsplash kadang tanpa ekstensi -> tetap diterima
+    // asalkan host-nya https, tetapi tolak skema aneh seperti javascript:.
+    if (!ext) return u.protocol === "https:";
+    return ALLOWED_IMAGE_EXT.includes(ext);
+  } catch {
+    return false;
+  }
+}
+
+/** Ubah textarea (satu URL per baris) menjadi array galeri yang sudah bersih. */
+function parseGallery(text: string): { list: string[]; rejected: number } {
+  const raw = text
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const valid = raw.filter(isValidImageUrl);
+  const unique = Array.from(new Set(valid)).slice(0, MAX_GALLERY_IMAGES);
+  return { list: unique, rejected: raw.length - valid.length };
+}
+
+/** Sanitasi tag: buang karakter tag HTML, batasi panjang & jumlah, hapus duplikat. */
+function parseTags(text: string): string[] {
+  const cleaned = text
+    .split(",")
+    .map((t) => t.replace(/[<>"'`]/g, "").trim().slice(0, 24))
+    .filter(Boolean);
+  return Array.from(new Set(cleaned)).slice(0, MAX_TAGS);
+}
+
+/** Buang nilai nutrisi kosong; kembalikan undefined bila semua kosong. */
+function cleanNutrition(n?: Nutrition | null): Nutrition | undefined {
+  if (!n) return undefined;
+  const out: Nutrition = {};
+  (["calories", "vitaminC", "fiber", "sugar"] as const).forEach((k) => {
+    const v = n[k];
+    if (typeof v === "number" && Number.isFinite(v) && v >= 0) out[k] = v;
+  });
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
 const EMPTY_FORM: Partial<Product> = {
   name: "",
   type: "buah",
@@ -156,6 +226,13 @@ export function AdminDashboard() {
   const [editing, setEditing] = useState<Partial<Product> | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploadingImg, setUploadingImg] = useState(false);
+  // Teks mentah untuk field "Detail tambahan": disimpan sebagai string agar
+  // admin bisa mengetik bebas; baru diparse & divalidasi saat Simpan.
+  const [galleryText, setGalleryText] = useState("");
+  const [tagsText, setTagsText] = useState("");
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  // id produk yang menunggu konfirmasi hapus; null = dialog tertutup.
+  const [pendingDelete, setPendingDelete] = useState<number | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const [customers, setCustomers] = useState<ProfileRow[]>([]);
@@ -257,6 +334,19 @@ export function AdminDashboard() {
     [products],
   );
 
+  // Saat modal produk dibuka, isi textarea detail tambahan dari data produk.
+  // Panel ditutup kembali supaya tampilan form sekilas tetap sama.
+  const editorOpen = editing !== null;
+  useEffect(() => {
+    if (!editorOpen) return;
+    setGalleryText((editing?.gallery ?? []).join("\n"));
+    setTagsText((editing?.tags ?? []).join(", "));
+    setDetailsOpen(false);
+    // Sengaja hanya bergantung pada identitas produk yang dibuka, bukan pada
+    // seluruh objek `editing`, agar tidak menimpa teks yang sedang diketik.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editorOpen, editing?.id]);
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -272,6 +362,21 @@ export function AdminDashboard() {
 
   const saveProduct = async () => {
     if (!editing || !editing.name) return;
+
+    // ----- Detail tambahan (opsional) -----
+    const gallery = parseGallery(galleryText);
+    if (gallery.rejected > 0) {
+      setError(
+        "Ada " +
+          gallery.rejected +
+          " URL galeri yang tidak valid dan diabaikan. Gunakan tautan http(s) ke file gambar.",
+      );
+    }
+    const tags = parseTags(tagsText);
+    // Nutrisi hanya relevan untuk lini buah & tumbuhan.
+    const isEdible = editing.type === "buah" || editing.type === "tumbuhan";
+    const nutrition = isEdible ? cleanNutrition(editing.nutrition) : undefined;
+
     setSaving(true);
     const row = {
       name: editing.name,
@@ -284,7 +389,14 @@ export function AdminDashboard() {
       image: editing.image,
       stock: Number(editing.stock) || 0,
       badge: editing.badge || null,
+      badge_color: editing.badgeColor || null,
       description: editing.description || null,
+      // Sebelumnya tiga kolom ini tidak pernah dikirim, sehingga produk buatan
+      // admin selalu kehilangan galeri, tag, dan info nutrisi.
+      // null (bukan []) supaya di UI tidak muncul section kosong yang menganga.
+      gallery: gallery.list.length > 0 ? gallery.list : null,
+      tags: tags.length > 0 ? tags : null,
+      nutrition: nutrition ?? null,
     };
     if (productsFromDb) {
       if (editing.id) {
@@ -306,10 +418,29 @@ export function AdminDashboard() {
     } else {
       setProducts((prev) => {
         if (editing.id)
-          return prev.map((p) => (p.id === editing.id ? ({ ...p, ...editing } as Product) : p));
+          return prev.map((p) =>
+            p.id === editing.id
+              ? ({
+                  ...p,
+                  ...editing,
+                  gallery: gallery.list.length > 0 ? gallery.list : undefined,
+                  tags: tags.length > 0 ? tags : undefined,
+                  nutrition,
+                } as Product)
+              : p,
+          );
         return [
           ...prev,
-          { ...EMPTY_FORM, ...editing, id: Date.now(), rating: 5, reviews: 0 } as Product,
+          {
+            ...EMPTY_FORM,
+            ...editing,
+            gallery: gallery.list.length > 0 ? gallery.list : undefined,
+            tags: tags.length > 0 ? tags : undefined,
+            nutrition,
+            id: Date.now(),
+            rating: 5,
+            reviews: 0,
+          } as Product,
         ];
       });
     }
@@ -317,8 +448,10 @@ export function AdminDashboard() {
     setEditing(null);
   };
 
+  // Aksi hapus dipisah dari konfirmasinya; window.confirm() diganti
+  // ConfirmDialog yang aksesibel dan tidak bisa diblokir browser.
   const deleteProduct = async (id: number) => {
-    if (!confirm("Hapus produk ini?")) return;
+    setPendingDelete(null);
     if (productsFromDb) {
       const { error } = await supabase.from("products").delete().eq("id", id);
       if (error) {
@@ -359,6 +492,13 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-background font-body">
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Hapus produk ini?"
+        description="Produk akan dihapus permanen dari katalog. Riwayat pesanan yang sudah ada tidak terpengaruh."
+        onConfirm={() => pendingDelete !== null && deleteProduct(pendingDelete)}
+        onCancel={() => setPendingDelete(null)}
+      />
       <header className="sticky top-0 z-40 glass border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -649,7 +789,7 @@ export function AdminDashboard() {
                         <Pencil size={13} /> Edit
                       </button>
                       <button
-                        onClick={() => deleteProduct(p.id)}
+                        onClick={() => setPendingDelete(p.id)}
                         className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-destructive hover:bg-secondary transition-colors border-l border-border"
                       >
                         <Trash2 size={13} /> Hapus
@@ -701,9 +841,17 @@ export function AdminDashboard() {
           </div>
         )}
 
-        {tab === "keris" && <AdminKerisPanel />}
+        {tab === "keris" && (
+          <Suspense fallback={<PanelFallback />}>
+            <AdminKerisPanel />
+          </Suspense>
+        )}
 
-        {tab === "panahan" && <AdminArcheryPanel />}
+        {tab === "panahan" && (
+          <Suspense fallback={<PanelFallback />}>
+            <AdminArcheryPanel />
+          </Suspense>
+        )}
       </main>
 
       {/* Order detail modal */}
@@ -881,6 +1029,115 @@ export function AdminDashboard() {
                   />
                 </div>
               </div>
+
+              {/* ----- Detail tambahan (opsional) -----
+                  Tertutup secara default, jadi form sekilas tetap sama seperti
+                  sebelumnya. Isi di sini mengisi kolom gallery / tags / nutrition
+                  yang dulu tidak pernah ikut tersimpan. */}
+              <Collapsible open={detailsOpen} onOpenChange={setDetailsOpen}>
+                <CollapsibleTrigger className="w-full flex items-center justify-between gap-2 bg-secondary/60 rounded-xl px-3 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors">
+                  <span className="flex items-center gap-2">
+                    <Boxes size={15} className="text-muted-foreground" />
+                    Detail tambahan (opsional)
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={
+                      "text-muted-foreground transition-transform " +
+                      (detailsOpen ? "rotate-180" : "")
+                    }
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-4 space-y-4">
+                  {/* Galeri: satu URL per baris, maksimal MAX_GALLERY_IMAGES */}
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">
+                      Galeri Gambar &mdash; satu URL per baris (maks. {MAX_GALLERY_IMAGES})
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={galleryText}
+                      onChange={(e) => setGalleryText(e.target.value)}
+                      placeholder={"https://contoh.com/foto-1.jpg\nhttps://contoh.com/foto-2.jpg"}
+                      className="w-full bg-secondary rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40 text-foreground resize-none"
+                    />
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Hanya tautan http(s) ke file gambar (jpg, png, webp, gif, avif). URL tidak
+                      valid akan diabaikan saat disimpan.
+                    </p>
+                  </div>
+
+                  {/* Tag: dipisah koma, disanitasi saat disimpan */}
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">
+                      Tag &mdash; pisahkan dengan koma (maks. {MAX_TAGS})
+                    </label>
+                    <input
+                      value={tagsText}
+                      onChange={(e) => setTagsText(e.target.value)}
+                      placeholder="Manis, Juicy, Premium"
+                      className="w-full bg-secondary rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+                    />
+                  </div>
+
+                  {/* Warna badge: sudah ada kolomnya di DB tapi belum pernah bisa diisi */}
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">
+                      Warna Badge (kode hex)
+                    </label>
+                    <input
+                      value={editing.badgeColor ?? ""}
+                      onChange={(e) =>
+                        setEditing((prev) => ({ ...prev, badgeColor: e.target.value }))
+                      }
+                      placeholder="#F4A623"
+                      className="w-full bg-secondary rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+                    />
+                  </div>
+
+                  {/* Nutrisi: hanya untuk lini buah & tumbuhan.
+                      Keris dan paket panahan/wisata dikelola di panel terpisah
+                      dan tidak punya data nutrisi. */}
+                  {(editing.type === "buah" || editing.type === "tumbuhan") && (
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">
+                        Info Nutrisi per 100 g (kosongkan bila tidak ada)
+                      </label>
+                      <div className="grid grid-cols-4 gap-2">
+                        {(
+                          [
+                            { key: "calories", label: "Kalori" },
+                            { key: "vitaminC", label: "Vit C (mg)" },
+                            { key: "fiber", label: "Serat (g)" },
+                            { key: "sugar", label: "Gula (g)" },
+                          ] as const
+                        ).map((n) => (
+                          <div key={n.key}>
+                            <input
+                              type="number"
+                              min={0}
+                              value={editing.nutrition?.[n.key] ?? ""}
+                              onChange={(e) =>
+                                setEditing((prev) => {
+                                  const raw = e.target.value;
+                                  const next: Nutrition = { ...(prev?.nutrition ?? {}) };
+                                  if (raw === "") delete next[n.key];
+                                  else next[n.key] = Number(raw);
+                                  return { ...prev, nutrition: next };
+                                })
+                              }
+                              className="w-full bg-secondary rounded-xl px-2 py-2 text-sm text-center outline-none focus:ring-2 focus:ring-primary/40 text-foreground"
+                            />
+                            <div className="text-[10px] text-muted-foreground text-center mt-1">
+                              {n.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
             </div>
             <div className="px-6 py-4 border-t border-border flex justify-end gap-2">
               <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-full text-sm text-foreground hover:bg-secondary">

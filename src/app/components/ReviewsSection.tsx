@@ -15,6 +15,10 @@ function formatDate(iso: string): string {
   }
 }
 
+// Batas panjang komentar, disamakan dengan CHECK constraint di database
+// (reviews_comment_len_check) agar pengguna dicegah sebelum ditolak server.
+const MAX_COMMENT = 1000;
+
 export function ReviewsSection({ productId }: { productId: number }) {
   const { user, profile } = useAuth();
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
@@ -90,11 +94,23 @@ export function ReviewsSection({ productId }: { productId: number }) {
           </div>
           <textarea
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            onChange={(e) => setComment(e.target.value.slice(0, MAX_COMMENT))}
+            maxLength={MAX_COMMENT}
             placeholder="Bagikan pengalaman Anda tentang produk ini..."
             rows={3}
+            aria-label="Komentar ulasan"
             className="w-full bg-card border border-border rounded-xl px-3 py-2 text-sm text-foreground outline-none focus:border-primary resize-none"
           />
+          <div className="flex justify-end mt-1">
+            <span
+              className={
+                "text-[11px] " +
+                (comment.length > MAX_COMMENT - 100 ? "text-accent" : "text-muted-foreground")
+              }
+            >
+              {comment.length}/{MAX_COMMENT}
+            </span>
+          </div>
           {msg && <p className="text-xs text-primary mt-2">{msg}</p>}
           <button
             onClick={submit}

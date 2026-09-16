@@ -1,0 +1,10 @@
+# Ganti Sitemap dengan domain final saat pindah dari domain sementara.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /orders
+Disallow: /profile
+Disallow: /wishlist
+
+Sitemap: https://GANTI-DENGAN-DOMAINMU/sitemap.xml

@@ -1,5 +1,5 @@
 -- =============================================================
--- FreshGrove — SETUP DATABASE LENGKAP (idempotent / aman diulang)
+-- Candimulyo Park Tour — SETUP DATABASE LENGKAP (idempotent / aman diulang)
 -- Jalankan SELURUH file ini di Supabase: SQL Editor -> New query ->
 -- tempel semua -> Run. Aman dijalankan berkali-kali.
 --

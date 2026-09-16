@@ -1,5 +1,5 @@
 -- =============================================================
--- Tabel `products` untuk FreshGrove (OPSIONAL).
+-- Tabel `products` untuk Candimulyo Park Tour (OPSIONAL).
 -- Website memakai pendekatan HYBRID: jika tabel ini ada & terisi,
 -- katalog & admin akan memakai data dari sini. Jika tidak, aplikasi
 -- otomatis memakai SEED_PRODUCTS di src/lib/products.ts.

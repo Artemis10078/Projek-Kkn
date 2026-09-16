@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router";
 import { Leaf, Mail, Lock, User as UserIcon, Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+// Nama merek diambil dari satu sumber kebenaran di config.ts.
+import { SITE } from "../../lib/config";
 
 export function LoginPage() {
   const { signInWithGoogle, signInWithEmail, signUpWithEmail } = useAuth();
@@ -70,7 +72,7 @@ export function LoginPage() {
             <Leaf size={26} className="text-primary-foreground" />
           </div>
           <span style={{ fontFamily: "var(--font-display)" }} className="text-2xl text-primary">
-            FreshGrove
+            {SITE.name}
           </span>
           <p className="text-sm text-muted-foreground mt-1">
             {mode === "login" ? "Masuk ke akun kamu" : "Buat akun baru"}

@@ -7,6 +7,7 @@ import {
   type ArcheryPackageRow,
 } from "../../lib/db";
 import { formatRupiah } from "../../lib/products";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 type Draft = Partial<ArcheryPackageRow> & { includesText?: string };
 
@@ -31,6 +32,8 @@ export function AdminArcheryPanel() {
   const [editing, setEditing] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // id paket yang menunggu konfirmasi hapus; null = dialog tertutup.
+  const [pendingDelete, setPendingDelete] = useState<number | null>(null);
 
   const load = async () => {
     setLoading(true);
@@ -69,8 +72,9 @@ export function AdminArcheryPanel() {
     load();
   };
 
-  const onDelete = async (id: number) => {
-    if (!confirm("Hapus paket panahan ini?")) return;
+  // Konfirmasi hapus memakai dialog bertema, bukan window.confirm().
+  const doDelete = async (id: number) => {
+    setPendingDelete(null);
     const { error } = await deleteArcheryPackage(id);
     if (error) {
       setError(error);
@@ -81,6 +85,13 @@ export function AdminArcheryPanel() {
 
   return (
     <div>
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Hapus paket ini?"
+        description="Paket wisata/panahan akan dihapus permanen dan tidak bisa dikembalikan."
+        onConfirm={() => pendingDelete !== null && doDelete(pendingDelete)}
+        onCancel={() => setPendingDelete(null)}
+      />
       <div className="flex items-center justify-between mb-5">
         <div>
           <h2 className="font-display text-2xl text-foreground">Paket Wisata</h2>
@@ -133,7 +144,7 @@ export function AdminArcheryPanel() {
                   <Pencil size={13} /> Edit
                 </button>
                 <button
-                  onClick={() => onDelete(p.id)}
+                  onClick={() => setPendingDelete(p.id)}
                   className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-red-50 text-red-600 hover:bg-red-100"
                 >
                   <Trash2 size={13} /> Hapus

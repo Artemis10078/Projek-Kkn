@@ -28,6 +28,17 @@ const id: Dict = {
   "aria.cart": "Keranjang",
   "aria.menu": "Menu",
   "aria.lang": "Ganti bahasa",
+  "aria.prevPage": "Halaman sebelumnya",
+  "aria.nextPage": "Halaman berikutnya",
+
+  // Legal & paginasi (BARU)
+  "footer.linkPrivasi": "Kebijakan Privasi",
+  "footer.linkSyarat": "Syarat & Ketentuan",
+  "catalog.page": "Halaman",
+  "catalog.of": "dari",
+  "catalog.showing": "Menampilkan",
+  "catalog.resetFilter": "Reset filter",
+  "catalog.emptyHint": "Coba kata kunci lain atau pilih kategori berbeda.",
 
   // Footer
   "footer.newsTitle": "Kabar Terbaru dari Desa Wisata",
@@ -210,6 +221,17 @@ const en: Dict = {
   "aria.cart": "Cart",
   "aria.menu": "Menu",
   "aria.lang": "Switch language",
+  "aria.prevPage": "Previous page",
+  "aria.nextPage": "Next page",
+
+  // Legal & pagination (NEW)
+  "footer.linkPrivasi": "Privacy Policy",
+  "footer.linkSyarat": "Terms & Conditions",
+  "catalog.page": "Page",
+  "catalog.of": "of",
+  "catalog.showing": "Showing",
+  "catalog.resetFilter": "Reset filters",
+  "catalog.emptyHint": "Try another keyword or pick a different category.",
 
   // Footer
   "footer.newsTitle": "Latest from the Tourism Village",

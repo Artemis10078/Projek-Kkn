@@ -3,7 +3,7 @@ import { Sword, X, MapPin, Sparkles, Layers } from "lucide-react";
 import { ShopShell } from "../components/ShopShell";
 import { PageBanner } from "../components/PageBanner";
 import { Reveal } from "../components/Reveal";
-import { Tilt3DCard } from "../components/immersive/Tilt3DCard";
+import { Tilt3DCard } from "../components/immersive/LazyImmersive";
 import { fetchKeris, type KerisRow } from "../../lib/db";
 import { useLang } from "../context/LanguageContext";
 

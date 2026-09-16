@@ -15,11 +15,12 @@ import {
 } from "lucide-react";
 import { ShopShell } from "../components/ShopShell";
 import { Reveal } from "../components/Reveal";
-import { MistCanvas } from "../components/immersive/MistCanvas";
-import { Tilt3DCard } from "../components/immersive/Tilt3DCard";
+import { MistCanvas } from "../components/immersive/LazyImmersive";
+import { Tilt3DCard } from "../components/immersive/LazyImmersive";
 import { useLang } from "../context/LanguageContext";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 import { useTheme } from "../context/ThemeContext";
-import { waLink } from "../../lib/config";
+import { SITE, waLink } from "../../lib/config";
 
 const WM = "https://commons.wikimedia.org/wiki/Special:FilePath/";
 const KERIS_IMG = WM + "Keris%20Naga%20Sonobudoyo.jpg?width=900";
@@ -41,6 +42,20 @@ function mediaStyle(img: string) {
 
 export function HomePage() {
   const { t } = useLang();
+  // Meta + data terstruktur beranda. Tidak mengubah tampilan sama sekali.
+  useDocumentMeta({
+    title: "",
+    description: SITE.description,
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: SITE.name,
+      description: SITE.description,
+      telephone: SITE.phoneDisplay,
+      email: SITE.email,
+      address: { "@type": "PostalAddress", streetAddress: SITE.address },
+    },
+  });
   const { theme } = useTheme();
   const [par, setPar] = useState({ x: 0, y: 0 });
   const frame = useRef(0);
@@ -263,7 +278,7 @@ export function HomePage() {
                     <a
                       href={waLink(t("home.desaWaMsg"))}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="imm-brass-btn inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold"
                     >
                       <MessageCircle size={16} /> {t("home.desaCta")}

@@ -24,6 +24,10 @@ const LINKS: { titleKey: string; items: { labelKey: string; to: string }[] }[] =
     items: [
       { labelKey: "footer.linkHome", to: "/" },
       { labelKey: "footer.linkKontak", to: "/kontak" },
+      // Tautan legal ditaruh di kolom Informasi yang sudah ada,
+      // sehingga struktur footer tidak berubah.
+      { labelKey: "footer.linkPrivasi", to: "/privasi" },
+      { labelKey: "footer.linkSyarat", to: "/syarat-ketentuan" },
     ],
   },
 ];
@@ -99,7 +103,7 @@ export function Footer() {
               <a
                 href={SITE.instagram}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:scale-110 transition-all"
               >
                 <Instagram size={16} />
@@ -107,7 +111,7 @@ export function Footer() {
               <a
                 href={SITE.facebook}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:scale-110 transition-all"
               >
                 <Facebook size={16} />

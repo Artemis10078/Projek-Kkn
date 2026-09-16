@@ -1,4 +1,4 @@
-# 🚀 Panduan Hosting Gratis FreshGrove
+# 🚀 Panduan Hosting Gratis Candimulyo Park Tour
 
 Website ini = React (Vite) di frontend + Supabase di backend. Keduanya punya tier GRATIS.
 Frontend di-deploy ke Vercel/Netlify/Cloudflare; backend tetap di Supabase Anda.
@@ -19,9 +19,9 @@ Frontend di-deploy ke Vercel/Netlify/Cloudflare; backend tetap di Supabase Anda.
    - (opsional pembayaran) `VITE_MIDTRANS_CLIENT_KEY`, `VITE_MIDTRANS_IS_PRODUCTION`
 3. Upload kode ke GitHub (cara termudah untuk auto-deploy):
    ```bash
-   git init && git add . && git commit -m "FreshGrove"
+   git init && git add . && git commit -m "Candimulyo Park Tour"
    # buat repo kosong di github.com lalu:
-   git remote add origin https://github.com/USERNAME/freshgrove.git
+   git remote add origin https://github.com/USERNAME/candimulyo-park-tour.git
    git push -u origin main
    ```
 
@@ -30,13 +30,13 @@ Frontend di-deploy ke Vercel/Netlify/Cloudflare; backend tetap di Supabase Anda.
 ## Opsi A — Vercel (paling direkomendasikan, termudah)
 
 1. Buka https://vercel.com → daftar pakai akun GitHub.
-2. **Add New → Project** → pilih repo `freshgrove`.
+2. **Add New → Project** → pilih repo `candimulyo-park-tour`.
 3. Vercel otomatis mendeteksi Vite. Biarkan:
    - Build Command: `npm run build`
    - Output Directory: `dist`
    (Sudah diatur juga lewat file `vercel.json`.)
 4. Buka **Environment Variables** → tambahkan `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, dst.
-5. Klik **Deploy**. Selesai! Anda dapat URL seperti `https://freshgrove.vercel.app` untuk dibagikan ke teman.
+5. Klik **Deploy**. Selesai! Anda dapat URL seperti `https://candimulyo-park-tour.vercel.app` untuk dibagikan ke teman.
 
 Setiap `git push` berikutnya akan otomatis update website.
 
@@ -65,7 +65,7 @@ Setiap `git push` berikutnya akan otomatis update website.
 
 - Backend (database, auth) sudah online di Supabase — tidak perlu hosting tambahan.
 - Di dashboard Supabase → **Authentication → URL Configuration**, tambahkan domain hosting Anda
-  (mis. `https://freshgrove.vercel.app`) ke **Site URL** & **Redirect URLs** agar login berfungsi.
+  (mis. `https://candimulyo-park-tour.vercel.app`) ke **Site URL** & **Redirect URLs** agar login berfungsi.
 - Jalankan SQL di `supabase/sql/products.sql` dan `schema.sql` lewat **SQL Editor** Supabase
   agar data produk & tabel pesanan aktif. Tanpa ini, situs tetap tampil pakai data contoh (seed).
 - Pembayaran Midtrans (opsional) butuh deploy Edge Function:

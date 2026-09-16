@@ -16,12 +16,15 @@ interface WishlistContextValue {
 }
 
 const WishlistContext = createContext<WishlistContextValue | undefined>(undefined);
-const STORAGE_KEY = "freshgrove-wishlist";
+const STORAGE_KEY = "candimulyo-wishlist";
+// Kunci lama dari template; dibaca sekali agar wishlist tamu tidak hilang.
+const LEGACY_STORAGE_KEY = "freshgrove-wishlist";
 
 function loadLocal(): number[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw =
+      localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
     return raw ? (JSON.parse(raw) as number[]) : [];
   } catch {
     return [];

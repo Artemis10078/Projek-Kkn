@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Tag, Search, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Tag, Search, X, ChevronLeft, ChevronRight, SearchX } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { ProductModal } from "./ProductModal";
 import { SkeletonCard } from "./SkeletonCard";
@@ -13,6 +13,10 @@ import { CATEGORIES, type Product } from "../../lib/products";
 export type { Product as Fruit } from "../../lib/products";
 
 type SortKey = "popular" | "price-asc" | "price-desc" | "rating";
+
+// Jumlah produk per halaman. 12 habis dibagi 2, 3, dan 4 sehingga grid
+// tetap rapi di semua ukuran layar.
+const PAGE_SIZE = 12;
 
 const SORT_OPTIONS: { key: SortKey; labelKey: string }[] = [
   { key: "popular", labelKey: "catalog.sortPopular" },
@@ -47,6 +51,7 @@ export function FruitCatalog({
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [sort, setSort] = useState<SortKey>("popular");
   const [selected, setSelected] = useState<Product | null>(null);
+  const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -77,6 +82,30 @@ export function FruitCatalog({
     });
     return list;
   }, [products, activeCategory, searchQuery, sort, productType]);
+
+  // Paginasi: sebelumnya seluruh hasil dirender sekaligus, sehingga halaman
+  // makin berat dan panjang saat katalog bertambah.
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  // Kembali ke halaman 1 setiap kali filter/pencarian/urutan berubah,
+  // supaya pengguna tidak terjebak di halaman yang kosong.
+  useEffect(() => {
+    setPage(1);
+  }, [activeCategory, searchQuery, sort, productType]);
+
+  const goToPage = (n: number) => {
+    setPage(n);
+    // Gulir ke awal katalog, bukan ke atas halaman, agar konteks terjaga.
+    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const resetFilters = () => {
+    setActiveCategory("All");
+    setSort("popular");
+    onSearchChange?.("");
+  };
 
   return (
     <section id="catalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -155,12 +184,22 @@ export function FruitCatalog({
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-20 text-muted-foreground">
-          <p className="text-lg">{t("catalog.empty")}</p>
+        /* Empty state: sebelumnya hanya satu baris teks tanpa jalan keluar.
+           Kini ada ikon, saran, dan tombol reset filter. */
+        <div className="flex flex-col items-center justify-center py-20 text-center gap-3">
+          <SearchX size={44} strokeWidth={1.2} className="text-muted-foreground" />
+          <p className="text-lg text-foreground">{t("catalog.empty")}</p>
+          <p className="text-sm text-muted-foreground max-w-xs">{t("catalog.emptyHint")}</p>
+          <button
+            onClick={resetFilters}
+            className="mt-1 text-sm font-semibold text-primary border border-primary/40 px-5 py-2 rounded-full hover:bg-primary-soft transition-colors"
+          >
+            {t("catalog.resetFilter")}
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {filtered.map((p) => (
+          {paged.map((p) => (
             <Reveal key={p.id}>
               <ProductCard
                 product={p}
@@ -172,6 +211,67 @@ export function FruitCatalog({
             </Reveal>
           ))}
         </div>
+      )}
+
+      {/* Paginasi: hanya muncul bila hasil lebih dari satu halaman. */}
+      {!loading && totalPages > 1 && (
+        <nav className="flex items-center justify-center gap-2 mt-10" aria-label={t("catalog.page")}>
+          <button
+            onClick={() => goToPage(safePage - 1)}
+            disabled={safePage === 1}
+            aria-label={t("aria.prevPage")}
+            className="w-9 h-9 rounded-full border border-border bg-card text-foreground flex items-center justify-center hover:border-primary disabled:opacity-40 disabled:hover:border-border transition-colors"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const n = i + 1;
+            // Tampilkan halaman pertama, terakhir, dan sekitar halaman aktif.
+            const near = Math.abs(n - safePage) <= 1;
+            const edge = n === 1 || n === totalPages;
+            if (!near && !edge) {
+              if (n === 2 || n === totalPages - 1)
+                return (
+                  <span key={n} className="text-muted-foreground text-sm px-1">
+                    &hellip;
+                  </span>
+                );
+              return null;
+            }
+            return (
+              <button
+                key={n}
+                onClick={() => goToPage(n)}
+                aria-current={n === safePage ? "page" : undefined}
+                className={`min-w-9 h-9 px-3 rounded-full border text-sm transition-colors ${
+                  n === safePage
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-card text-muted-foreground border-border hover:border-primary"
+                }`}
+              >
+                {n}
+              </button>
+            );
+          })}
+
+          <button
+            onClick={() => goToPage(safePage + 1)}
+            disabled={safePage === totalPages}
+            aria-label={t("aria.nextPage")}
+            className="w-9 h-9 rounded-full border border-border bg-card text-foreground flex items-center justify-center hover:border-primary disabled:opacity-40 disabled:hover:border-border transition-colors"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </nav>
+      )}
+
+      {!loading && totalPages > 1 && (
+        <p className="text-center text-xs text-muted-foreground mt-3">
+          {t("catalog.showing")} {(safePage - 1) * PAGE_SIZE + 1}&ndash;
+          {Math.min(safePage * PAGE_SIZE, filtered.length)} {t("catalog.of")} {filtered.length}{" "}
+          {t("catalog.products")}
+        </p>
       )}
 
       {selected && (

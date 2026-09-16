@@ -1,5 +1,5 @@
 -- =========================================================
--- SETUP DATABASE UNTUK FRESHGROVE (Fruit Shop Catalog)
+-- SETUP DATABASE UNTUK CANDIMULYO PARK TOUR
 -- Jalankan script ini di: Supabase Dashboard -> SQL Editor
 -- =========================================================
 

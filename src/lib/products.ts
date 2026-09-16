@@ -1,5 +1,5 @@
 // =============================================================
-// Sumber data produk terpusat untuk FreshGrove.
+// Sumber data produk terpusat untuk Candimulyo Park Tour.
 // Pendekatan HYBRID: aplikasi mencoba mengambil dari tabel
 // Supabase `products`; jika belum dikonfigurasi / kosong / gagal,
 // otomatis memakai SEED_PRODUCTS di bawah ini sebagai fallback,

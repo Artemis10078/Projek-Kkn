@@ -1,3 +1,6 @@
+# Bagian [build] dan [[redirects]] SAMA dengan aslinya.
+# Yang ditambahkan hanya header keamanan (tidak mengubah tampilan).
+
 [build]
   command = "npm run build"
   publish = "dist"
@@ -6,3 +9,17 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+    # CSP dalam mode Report-Only: hanya melapor di Console, tidak memblokir.
+    # Setelah beberapa hari tanpa laporan pelanggaran, ganti nama header
+    # menjadi Content-Security-Policy agar benar-benar memblokir.
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://app.midtrans.com https://app.sandbox.midtrans.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.midtrans.com https://app.midtrans.com https://app.sandbox.midtrans.com; frame-src https://app.midtrans.com https://app.sandbox.midtrans.com https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; form-action 'self'"

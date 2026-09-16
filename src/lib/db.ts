@@ -131,12 +131,15 @@ export async function upsertReview(params: {
   const { data: auth } = await supabase.auth.getUser();
   const uid = auth.user?.id;
   if (!uid) return { error: "Harus login untuk memberi ulasan" };
+  // Rating dipaksa 1-5 dan teks dipangkas, agar tidak tertolak
+  // oleh batasan database (yang akan tampil sebagai galat aneh).
+  const rating = Math.min(5, Math.max(1, Math.round(Number(params.rating) || 0)));
   const row = {
     product_id: params.productId,
     user_id: uid,
-    user_name: params.userName,
-    rating: params.rating,
-    comment: params.comment,
+    user_name: (params.userName || "Pengguna").trim().slice(0, 120),
+    rating,
+    comment: (params.comment || "").trim().slice(0, 1000),
   };
   const { error } = await supabase
     .from("reviews")
@@ -191,13 +194,38 @@ export async function removeWishlist(
 }
 
 // ---------- Profil ----------
+// Hanya kolom di daftar ini yang boleh diubah pengguna.
+// Tanpa ini, pemanggil bisa menyelipkan { role: "admin" }.
+// Database juga sudah memblokirnya (trigger protect_profile_columns),
+// jadi ini lapisan kedua, bukan satu-satunya pertahanan.
+const EDITABLE_PROFILE_FIELDS = [
+  "full_name",
+  "phone",
+  "address",
+  "city",
+  "postal_code",
+  "avatar_url",
+] as const;
+
+export type ProfileUpdateInput = Partial<
+  Record<(typeof EDITABLE_PROFILE_FIELDS)[number], string | null>
+>;
+
 export async function updateProfile(
   userId: string,
-  fields: Record<string, unknown>,
+  fields: ProfileUpdateInput,
 ): Promise<{ error: string | null }> {
+  const safe: Record<string, string | null> = {};
+  for (const key of EDITABLE_PROFILE_FIELDS) {
+    const value = fields[key];
+    if (value === undefined) continue;
+    safe[key] = typeof value === "string" ? value.trim().slice(0, 500) : null;
+  }
+  if (Object.keys(safe).length === 0) return { error: null };
+
   const { error } = await supabase
     .from("profiles")
-    .update(fields)
+    .update(safe)
     .eq("id", userId);
   return { error: error ? error.message : null };
 }
@@ -228,17 +256,48 @@ export async function fetchAllProfiles(): Promise<ProfileRow[]> {
 }
 
 // ---------- Upload gambar ke Storage ----------
+// Batas 10 MB dipilih supaya foto kamera HP (biasanya 6-12 MB)
+// tetap bisa diunggah dan admin tidak mengalami galat baru.
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES: string[] = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+];
+const ALLOWED_EXTENSIONS: string[] = ["jpg", "jpeg", "png", "webp", "gif"];
+
 export async function uploadImage(
   bucket: string,
   file: File,
   prefix = "",
 ): Promise<{ url: string | null; error: string | null }> {
-  const ext = file.name.includes(".") ? file.name.split(".").pop() : "jpg";
-  const rand = Math.random().toString(36).slice(2, 10);
+  // Validasi berkas. Sebelumnya hanya accept="image/*" di input HTML,
+  // yang mudah dilewati dan tidak membatasi ukuran.
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return { url: null, error: "Ukuran gambar maksimal 10 MB." };
+  }
+  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+    return { url: null, error: "Format harus JPG, PNG, WEBP, atau GIF." };
+  }
+
+  const rawExt = file.name.includes(".")
+    ? (file.name.split(".").pop() ?? "").toLowerCase()
+    : "";
+  const ext = ALLOWED_EXTENSIONS.includes(rawExt) ? rawExt : "jpg";
+
+  // Nama berkas acak dari generator kriptografis. Math.random()
+  // bisa diprediksi, sehingga nama berkas orang lain bisa ditebak.
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  const rand = Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
   const path = prefix + Date.now() + "-" + rand + "." + ext;
+
+  // upsert: false agar berkas yang sudah ada tidak bisa ditimpa.
   const { error } = await supabase.storage
     .from(bucket)
-    .upload(path, file, { upsert: true, cacheControl: "3600" });
+    .upload(path, file, { upsert: false, cacheControl: "3600" });
   if (error) return { url: null, error: error.message };
   const { data } = supabase.storage.from(bucket).getPublicUrl(path);
   return { url: data.publicUrl, error: null };
@@ -319,10 +378,16 @@ export interface ArcheryPackageRow {
 export async function fetchArcheryPackages(
   adminMode = false,
 ): Promise<ArcheryPackageRow[]> {
-  const { data, error } = await supabase
+  // Paket nonaktif disaring di SERVER untuk mode pengunjung.
+  // Sebelumnya semua baris dikirim ke browser lalu difilter di
+  // klien, sehingga paket & harga yang belum dirilis tetap bisa
+  // dilihat lewat Network tab.
+  let query = supabase
     .from("archery_packages")
     .select("*")
     .order("sort", { ascending: true });
+  if (!adminMode) query = query.eq("active", true);
+  const { data, error } = await query;
   if (error) {
     console.warn("[db] fetchArcheryPackages:", error.message);
     return [];

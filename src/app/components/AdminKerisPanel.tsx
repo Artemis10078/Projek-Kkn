@@ -7,6 +7,7 @@ import {
   uploadImage,
   type KerisRow,
 } from "../../lib/db";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 type Draft = Partial<KerisRow>;
 
@@ -29,6 +30,8 @@ export function AdminKerisPanel() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // id keris yang menunggu konfirmasi hapus; null = dialog tertutup.
+  const [pendingDelete, setPendingDelete] = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const load = async () => {
@@ -70,8 +73,10 @@ export function AdminKerisPanel() {
     load();
   };
 
-  const onDelete = async (id: number) => {
-    if (!confirm("Hapus keris ini dari galeri?")) return;
+  // Aksi hapus dipisah dari konfirmasinya; window.confirm() diganti dialog
+  // bertema yang aksesibel keyboard dan tidak bisa diblokir browser.
+  const doDelete = async (id: number) => {
+    setPendingDelete(null);
     const { error } = await deleteKeris(id);
     if (error) {
       setError(error);
@@ -82,6 +87,13 @@ export function AdminKerisPanel() {
 
   return (
     <div>
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Hapus keris ini?"
+        description="Keris akan dihapus permanen dari galeri dan tidak bisa dikembalikan."
+        onConfirm={() => pendingDelete !== null && doDelete(pendingDelete)}
+        onCancel={() => setPendingDelete(null)}
+      />
       <div className="flex items-center justify-between mb-5">
         <div>
           <h2 className="font-display text-2xl text-foreground">Galeri Keris</h2>
@@ -139,7 +151,7 @@ export function AdminKerisPanel() {
                     <Pencil size={13} /> Edit
                   </button>
                   <button
-                    onClick={() => onDelete(k.id)}
+                    onClick={() => setPendingDelete(k.id)}
                     className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-red-50 text-red-600 hover:bg-red-100"
                   >
                     <Trash2 size={13} /> Hapus

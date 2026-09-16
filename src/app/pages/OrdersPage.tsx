@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Package, ScanLine, X, ShoppingBag, Clock } from "lucide-react";
+import { Package, ScanLine, X, ShoppingBag, Clock, Check } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
@@ -26,6 +26,90 @@ export const STATUS_STYLE: Record<string, string> = {
   completed: "bg-green-500/15 text-green-600",
   cancelled: "bg-red-500/15 text-red-600",
 };
+
+// Urutan tahapan pesanan untuk timeline.
+const TIMELINE_STEPS: { key: string; label: string }[] = [
+  { key: "pending", label: "Dipesan" },
+  { key: "paid", label: "Dibayar" },
+  { key: "processing", label: "Diproses" },
+  { key: "shipped", label: "Dikirim" },
+  { key: "completed", label: "Selesai" },
+];
+
+/** Indeks tahap yang sedang berjalan; -1 bila status di luar alur normal. */
+function stepIndex(status: string): number {
+  return TIMELINE_STEPS.findIndex((s) => s.key === status);
+}
+
+/**
+ * Timeline status pesanan. Sebelumnya pembeli hanya melihat satu label status
+ * tanpa konteks tahap berikutnya.
+ */
+function OrderTimeline({ status }: { status: string }) {
+  // Pesanan dibatalkan tidak punya alur maju.
+  if (status === "cancelled") {
+    return (
+      <div className="mt-4 border-t border-border pt-3">
+        <p className="text-xs text-red-600">
+          Pesanan ini dibatalkan. Hubungi kami bila Anda merasa ini keliru.
+        </p>
+      </div>
+    );
+  }
+
+  const current = stepIndex(status);
+  if (current < 0) return null;
+
+  return (
+    <div className="mt-4 border-t border-border pt-4">
+      <ol className="flex items-start justify-between gap-1">
+        {TIMELINE_STEPS.map((step, i) => {
+          const done = i <= current;
+          const isCurrent = i === current;
+          return (
+            <li key={step.key} className="flex-1 flex flex-col items-center text-center relative">
+              {/* Garis penghubung antar tahap */}
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  className={
+                    "absolute top-3 right-1/2 w-full h-0.5 " + (done ? "bg-primary" : "bg-border")
+                  }
+                />
+              )}
+              <span
+                className={
+                  "relative z-10 w-6 h-6 rounded-full flex items-center justify-center border-2 " +
+                  (done
+                    ? "bg-primary border-primary text-white"
+                    : "bg-card border-border text-muted-foreground")
+                }
+              >
+                {done ? (
+                  <Check size={12} strokeWidth={3} />
+                ) : (
+                  <span className="text-[10px]">{i + 1}</span>
+                )}
+              </span>
+              <span
+                className={
+                  "mt-1.5 text-[10px] leading-tight " +
+                  (isCurrent
+                    ? "text-foreground font-semibold"
+                    : done
+                      ? "text-primary"
+                      : "text-muted-foreground")
+                }
+              >
+                {step.label}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
 
 function formatDate(iso: string): string {
   try {
@@ -131,6 +215,8 @@ export function OrdersPage() {
                     {formatRupiah(o.total)}
                   </span>
                 </div>
+
+                <OrderTimeline status={o.status} />
 
                 {o.status === "pending" && (
                   <button

@@ -3,7 +3,7 @@
 :root {
   --font-size: 16px;
 
-  /* ===== FreshGrove — Fresh & Organic (Light) ===== */
+  /* ===== Candimulyo Park Tour — Fresh & Organic (Light) ===== */
   --background: #FBFDF7;
   --foreground: #16241A;
   --card: #FFFFFF;
@@ -65,7 +65,7 @@
 }
 
 .dark {
-  /* ===== FreshGrove — Deep Forest Premium (Dark) ===== */
+  /* ===== Candimulyo Park Tour — Deep Forest Premium (Dark) ===== */
   --background: #0C1610;
   --foreground: #E8F2EA;
   --card: #14241A;
